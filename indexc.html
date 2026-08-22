@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Asim &amp; Sevinc — Toy Dəvətnaməsi | The Sacred Garden</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&family=Ovo&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       RESET & BASE STYLES
+       ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #FAF4E8;
+      color: #584132;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Typography Classes */
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .font-pinyon { font-family: 'Pinyon Script', cursive; }
+    .font-ovo { font-family: 'Ovo', serif; }
+    .font-sans { font-family: 'Montserrat', sans-serif; }
+
+    /* Gold Gradient Text */
+    .gold-text {
+      background: linear-gradient(135deg, #a67d2b 0%, #d4af37 35%, #f5e296 50%, #cda95a 65%, #966f20 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gold-shadow {
+      box-shadow: 0 10px 30px -10px rgba(166, 125, 43, 0.25), 0 0 1px 1px rgba(212, 175, 55, 0.15);
+    }
+
+    /* Container Wrapper */
+    .invitation-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #FAF4E8;
+      box-shadow: 0 20px 50px rgba(90, 15, 27, 0.08);
+      position: relative;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    @media (min-width: 640px) {
+      .invitation-container {
+        margin: 30px auto;
+        border-radius: 24px;
+        overflow: hidden;
+      }
+    }
+
+    /* =========================================================
+       ENVELOPE OVERLAY (OPENING CEREMONY)
+       ========================================================= */
+    #envelopeOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: #1A120B;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.2s;
+      padding: 20px;
+    }
+
+    #envelopeOverlay.opened {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .envelope-card {
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(180deg, #FFFDF9 0%, #FAF4E8 60%, #F3E8D2 100%);
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      border-radius: 20px;
+      padding: 36px 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .envelope-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .wax-seal {
+      width: 76px;
+      height: 76px;
+      background: radial-gradient(circle at 35% 35%, #8B1425, #5A0F1B 70%, #30040B);
+      border-radius: 50%;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      box-shadow: 0 8px 20px rgba(90, 15, 27, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -3px 6px rgba(0,0,0,0.5);
+      animation: sealPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes sealPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .seal-inner {
+      width: 58px;
+      height: 58px;
+      border: 1px dashed rgba(212, 175, 55, 0.7);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #FCECCE;
+    }
+
+    .seal-inner span {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+    .tap-hint {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #FCECCE;
+      animation: bounceHint 2s infinite ease-in-out;
+    }
+
+    @keyframes bounceHint {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* =========================================================
+       HERO SECTION
+       ========================================================= */
+    .hero-section {
+      text-align: center;
+      padding: 60px 20px 40px;
+      position: relative;
+    }
+
+    .hero-date-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .hero-date-banner .line {
+      height: 1px;
+      width: 50px;
+      background: #A67D2B;
+    }
+
+    .hero-names {
+      margin: 25px 0 15px;
+    }
+
+    .hero-names h1 {
+      font-size: clamp(52px, 12vw, 84px);
+      font-weight: 400;
+      color: #5A0F1B;
+      line-height: 0.95;
+    }
+
+    .hero-names .ampersand {
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(40px, 8vw, 60px);
+      color: #A67D2B;
+      display: block;
+      margin: 4px 0;
+    }
+
+    .quote-block {
+      max-width: 520px;
+      margin: 30px auto;
+      padding: 20px 15px;
+      border-top: 1px solid rgba(212, 175, 55, 0.4);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .quote-block p {
+      font-size: 24px;
+      font-style: italic;
+      color: #5A0F1B;
+      line-height: 1.4;
+    }
+
+    .quote-trans {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      color: #7A6250;
+      margin-top: 8px;
+    }
+
+    .invitation-text {
+      max-width: 580px;
+      margin: 20px auto 0;
+      font-size: 19px;
+      line-height: 1.7;
+      color: #584132;
+    }
+
+    /* =========================================================
+       COUNTDOWN TIMER
+       ========================================================= */
+    .countdown-section {
+      padding: 40px 20px;
+      text-align: center;
+      background: #FAF4E8;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 6vw, 42px);
+      color: #5A0F1B;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #A67D2B;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 480px;
+      margin: 25px auto 0;
+      padding: 20px;
+      background: #FFFDF9;
+      border-radius: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+
+    .time-box {
+      background: #FAF4E8;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+      padding: 12px 6px;
+    }
+
+    .time-val {
+      font-family: 'Ovo', serif;
+      font-size: clamp(28px, 6vw, 40px);
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .time-lbl {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #A67D2B;
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* =========================================================
+       SCHEDULE TIMELINE
+       ========================================================= */
+    .schedule-section {
+      padding: 50px 20px;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 500px;
+      margin: 40px auto 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, #D4AF37, transparent);
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      text-align: right;
+      padding-right: 25px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-time {
+      text-align: left;
+      padding-left: 25px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      text-align: left;
+      padding-left: 25px;
+      order: 2;
+    }
+
+    .timeline-item:nth-child(even) .timeline-time {
+      text-align: right;
+      padding-right: 25px;
+      order: 1;
+    }
+
+    .timeline-content { width: 42%; }
+    .timeline-time { width: 42%; }
+
+    .timeline-dot {
+      width: 36px;
+      height: 36px;
+      background: #FAF4E8;
+      border: 2px solid #D4AF37;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5A0F1B;
+      font-size: 14px;
+      z-index: 2;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .timeline-title {
+      font-size: 22px;
+      color: #5A0F1B;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .timeline-desc {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      color: #7A6250;
+      margin-top: 4px;
+    }
+
+    .timeline-hour {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      font-weight: bold;
+      color: #A67D2B;
+    }
+
+    /* =========================================================
+       VENUE & LOCATION
+       ========================================================= */
+    .venue-section {
+      padding: 50px 20px;
+      background: #FAF4E8;
+    }
+
+    .card {
+      background: #FFFDF9;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 20px;
+      padding: 30px 24px;
+      max-width: 580px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn-gold {
+      background: #5A0F1B;
+      color: #FAF4E8;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.3s;
+    }
+
+    .btn-gold:hover { background: #7A1525; }
+
+    .btn-outline {
+      background: transparent;
+      color: #5A0F1B;
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover { background: #FAF4E8; }
+
+    /* =========================================================
+       DRESS CODE & PALETTE
+       ========================================================= */
+    .dress-colors {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 25px;
+    }
+
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .swatch-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .swatch-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      color: #7A6250;
+    }
+
+    /* =========================================================
+       RSVP FORM
+       ========================================================= */
+    .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #8A6820;
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: #FAF4E8;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      color: #584132;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: #A67D2B;
+      background: #FFF;
+    }
+
+    .radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .radio-btn {
+      padding: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 10px;
+      background: #FAF4E8;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .radio-btn.active {
+      background: #5A0F1B;
+      color: #FAF4E8;
+      border-color: #5A0F1B;
+    }
+
+    /* =========================================================
+       FLOATING AUDIO BUTTON
+       ========================================================= */
+    #audioButton {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #5A0F1B;
+      color: #FAF4E8;
+      border: 2px solid #D4AF37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(90, 15, 27, 0.4);
+      z-index: 9999;
+      transition: transform 0.2s;
+    }
+
+    #audioButton:hover { transform: scale(1.08); }
+
+    /* Footer */
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       BACKGROUND AUDIO
+       ========================================== -->
+  <audio id="weddingAudio" loop preload="auto">
+    <source src="https://pub-4dc8201144ca418fb604349c73e8c724.r2.dev/Einaudi_%20Divenire%20(1)%20(1).mp3" type="audio/mp3">
+  </audio>
+
+  <!-- ==========================================
+       INTERACTIVE ENVELOPE OPENING OVERLAY
+       ========================================== -->
+               <div class="t396">
+          <div
+            class="t396__artboard rendered"
+            data-artboard-recid="2487446043"
+            data-artboard-screens="320,480,640,960,1200"
+            data-artboard-height="1240"
+            data-artboard-valign="center"
+            data-artboard-upscale="grid"
+            data-artboard-height-res-320="1240"
+            data-artboard-proxy-min-offset-top="0"
+            data-artboard-proxy-min-height="1240"
+            data-artboard-proxy-max-height="1240"
+          >
+            <div class="t396__carrier" data-artboard-recid="2487446043"></div>
+            <div class="t396__filter" data-artboard-recid="2487446043"></div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431773841348614000001"
+              data-elem-id="1773841348614000001"
+              data-elem-type="html"
+              data-field-top-value="0"
+              data-field-left-value="375"
+              data-field-height-value="762"
+              data-field-width-value="450"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-mobile="y"
+              data-field-widthmode-value="fixed"
+              data-field-left-res-320-value="-65"
+              data-field-height-res-320-value="492"
+              data-field-width-res-320-value="450"
+              data-field-widthmode-res-320-value="fixed"
+              data-field-left-res-480-value="15"
+              data-field-width-res-480-value="450"
+              data-field-widthmode-res-480-value="fixed"
+              data-field-top-res-640-value="0"
+              data-field-left-res-640-value="95"
+              data-field-width-res-640-value="450"
+              data-field-widthmode-res-640-value="fixed"
+              data-field-top-res-960-value="0"
+              data-field-left-res-960-value="255"
+              data-field-height-res-960-value="491"
+              data-field-width-res-960-value="450"
+              data-field-container-res-960-value="grid"
+              data-field-widthmode-res-960-value="fixed"
+              data-fields="width,height,top,left,container,axisx,axisy,widthunits,heightunits,leftunits,topunits"
+              style="width: 450px; left: 523.5px; top: 0px; height: 762px"
+            >
+              <div class="tn-atom tn-atom__html">
+                <video
+                  autoplay=""
+                  muted=""
+                  loop=""
+                  playsinline=""
+                  style="
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                    display: block;
+                  "
+                >
+                  <source
+                    src="/hero-video-BkP1eoiB.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431763402091707"
+              data-elem-id="1763402091707"
+              data-elem-type="shape"
+              data-field-top-value="0"
+              data-field-left-value="375"
+              data-field-height-value="676"
+              data-field-width-value="450"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-field-widthmode-value="fixed"
+              data-field-left-res-320-value="-65"
+              data-field-left-res-480-value="15"
+              data-field-left-res-640-value="95"
+              data-field-left-res-960-value="255"
+              data-fields="width,height,top,left,container,axisx,axisy,widthunits,heightunits,leftunits,topunits"
+              style="width: 450px; left: 523.5px; top: 0px; height: 676px"
+            >
+              <div class="tn-atom"></div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431779527203760000001"
+              data-elem-id="1779527203760000001"
+              data-elem-type="image"
+              data-field-top-value="753"
+              data-field-left-value="228"
+              data-field-height-value="487"
+              data-field-width-value="744"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-field-filewidth-value="1680"
+              data-field-fileheight-value="833"
+              data-field-heightmode-value="fixed"
+              data-field-top-res-320-value="763"
+              data-field-left-res-320-value="-212"
+              data-field-height-res-320-value="477"
+              data-field-heightmode-res-320-value="fixed"
+              data-field-top-res-480-value="763"
+              data-field-left-res-480-value="-132"
+              data-field-height-res-480-value="470"
+              data-field-heightmode-res-480-value="fixed"
+              data-field-top-res-640-value="763"
+              data-field-left-res-640-value="-52"
+              data-field-height-res-640-value="477"
+              data-field-heightmode-res-640-value="fixed"
+              data-field-top-res-960-value="758"
+              data-field-left-res-960-value="108"
+              data-field-height-res-960-value="479"
+              data-field-heightmode-res-960-value="fixed"
+              data-fields="img,width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="left: 376.5px; top: 753px; width: 744px"
+            >
+              <div class="tn-atom">
+                <img
+                  class="tn-atom__img t-img loaded"
+                  data-original="https://static.tildacdn.net/tild3134-6461-4832-a236-633431616631/623915249_2629494717.png"
+                  src="https://optim.tildacdn.net/tild3134-6461-4832-a236-633431616631/-/format/webp/623915249_2629494717.png.webp"
+                  alt=""
+                  imgfield="tn_img_1779527203760000001"
+                />
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem js-delay-anim tn-elem__24874460431763402147625 t-animate t-animate_started"
+              data-elem-id="1763402147625"
+              data-elem-type="text"
+              data-field-top-value="294"
+              data-field-left-value="320"
+              data-field-height-value="168"
+              data-field-width-value="560"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-style="fadeinup"
+              data-animate-duration="2"
+              data-animate-delay="3"
+              data-animate-distance="30"
+              data-animate-mobile="y"
+              data-field-textfit-value="autoheight"
+              data-field-fontsize-value="80"
+              data-field-left-res-320-value="-120"
+              data-field-left-res-480-value="-40"
+              data-field-left-res-640-value="40"
+              data-field-left-res-960-value="200"
+              data-fields="top,left,width,height,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="
+                top: 294px;
+                left: 468.5px;
+                width: 560px;
+                height: auto;
+                transform: translate3d(0px, 30px, 0px);
+                transition-delay: 3s;
+                transition-duration: 2s;
+              "
+            >
+              <div
+                class="tn-atom"
+                field="tn_text_1763402147625"
+                style="--lh-px: 56px; line-height: 56px"
+              >
+                Asim <br /><br />Sevinc
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem js-delay-anim tn-elem__2487446043176340398328864790 t-animate t-animate_started"
+              data-elem-id="176340398328864790"
+              data-elem-type="text"
+              data-field-top-value="154"
+              data-field-left-value="320"
+              data-field-height-value="37"
+              data-field-width-value="560"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-style="fadeinup"
+              data-animate-duration="2"
+              data-animate-delay="3"
+              data-animate-distance="30"
+              data-animate-mobile="y"
+              data-field-textfit-value="fixedsize"
+              data-field-fontsize-value="40"
+              data-field-left-res-320-value="-120"
+              data-field-left-res-480-value="-40"
+              data-field-left-res-640-value="40"
+              data-field-left-res-960-value="200"
+              data-fields="top,left,width,height,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="
+                top: 154px;
+                left: 468.5px;
+                width: 560px;
+                height: 37px;
+                transform: translate3d(0px, 30px, 0px);
+                transition-delay: 3s;
+                transition-duration: 2s;
+              "
+            >
+              <div
+                class="tn-atom"
+                field="tn_text_176340398328864790"
+                style="--lh-px: 20px; line-height: 20px"
+              >
+                Wedding Day
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem js-delay-anim tn-elem__2487446043176340401720454780 t-animate t-animate_started"
+              data-elem-id="176340401720454780"
+              data-elem-type="text"
+              data-field-top-value="196"
+              data-field-left-value="320"
+              data-field-height-value="37"
+              data-field-width-value="560"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-style="fadeinup"
+              data-animate-duration="2"
+              data-animate-delay="3"
+              data-animate-distance="30"
+              data-animate-mobile="y"
+              data-field-textfit-value="fixedsize"
+              data-field-fontsize-value="25"
+              data-field-left-res-320-value="-120"
+              data-field-left-res-480-value="-40"
+              data-field-left-res-640-value="40"
+              data-field-left-res-960-value="200"
+              data-fields="top,left,width,height,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="
+                top: 196px;
+                left: 468.5px;
+                width: 560px;
+                height: 37px;
+                transform: translate3d(0px, 30px, 0px);
+                transition-delay: 3s;
+                transition-duration: 2s;
+              "
+            >
+              <div
+                class="tn-atom"
+                field="tn_text_176340401720454780"
+                style="--lh-px: 13px; line-height: 13px"
+              >
+                27.09.26
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem js-delay-anim tn-elem__2487446043176340390975774690 t-animate t-animate_started"
+              data-elem-id="176340390975774690"
+              data-elem-type="text"
+              data-field-top-value="356"
+              data-field-left-value="578"
+              data-field-height-value="44"
+              data-field-width-value="55"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-style="fadeinup"
+              data-animate-duration="2"
+              data-animate-delay="3"
+              data-animate-distance="30"
+              data-animate-mobile="y"
+              data-field-textfit-value="autoheight"
+              data-field-fontsize-value="40"
+              data-field-left-res-320-value="138"
+              data-field-left-res-480-value="218"
+              data-field-left-res-640-value="298"
+              data-field-left-res-960-value="458"
+              data-fields="top,left,width,height,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="
+                top: 356px;
+                left: 726.5px;
+                width: 55px;
+                height: auto;
+                transform: translate3d(0px, 30px, 0px);
+                transition-delay: 3s;
+                transition-duration: 2s;
+              "
+            >
+              <div
+                class="tn-atom"
+                field="tn_text_176340390975774690"
+                style="--lh-px: 44px; line-height: 44px"
+              >
+                &amp;
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431780142978273000001 t-sbs-anim_started"
+              data-elem-id="1780142978273000001"
+              data-elem-type="image"
+              data-field-top-value="566"
+              data-field-left-value="359"
+              data-field-height-value="343"
+              data-field-width-value="224"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-mobile="y"
+              data-animate-sbs-event="intoview"
+              data-animate-sbs-trg="1"
+              data-animate-sbs-trgofst="0"
+              data-animate-sbs-loop="loop"
+              data-animate-sbs-opts="[{'mx':0,'my':0,'sx':1,'sy':1,'op':1,'ro':0,'ti':0,'ea':'0','dt':0},{'mx':0,'my':0,'sx':1.06,'sy':1.06,'op':1,'ro':2,'ti':2000,'ea':'0','dt':0},{'mx':0,'my':0,'sx':1,'sy':1,'op':1,'ro':0,'ti':2000,'ea':'0','dt':0}]"
+              data-field-filewidth-value="823"
+              data-field-fileheight-value="1260"
+              data-field-heightmode-value="hug"
+              data-field-top-res-320-value="568"
+              data-field-left-res-320-value="-77"
+              data-field-height-res-320-value="334"
+              data-field-width-res-320-value="218"
+              data-field-left-res-480-value="2"
+              data-field-height-res-480-value="343"
+              data-field-left-res-640-value="77"
+              data-field-height-res-640-value="343"
+              data-field-left-res-960-value="238"
+              data-field-height-res-960-value="343"
+              data-fields="img,width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="left: 507.5px; top: 566px; width: 224px"
+            >
+              <div
+                class="tn-atom__sbs-anim-wrapper"
+                style="display: inherit; width: inherit; height: inherit"
+                id="sbs-2487446043-1780142978273000001"
+              >
+                <div class="tn-atom">
+                  <img
+                    class="tn-atom__img t-img loaded"
+                    data-original="https://static.tildacdn.net/tild6639-3363-4136-a234-356639363561/noroot.png"
+                    src="https://optim.tildacdn.net/tild6639-3363-4136-a234-356639363561/-/resize/448x/-/format/webp/noroot.png.webp"
+                    alt=""
+                    imgfield="tn_img_1780142978273000001"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431780748451024000006 t-sbs-anim_started"
+              data-elem-id="1780748451024000006"
+              data-elem-type="image"
+              data-field-top-value="547"
+              data-field-left-value="605"
+              data-field-height-value="359"
+              data-field-width-value="236"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-mobile="y"
+              data-animate-sbs-event="intoview"
+              data-animate-sbs-trg="1"
+              data-animate-sbs-trgofst="0"
+              data-animate-sbs-loop="loop"
+              data-animate-sbs-opts="[{'mx':0,'my':0,'sx':1,'sy':1,'op':1,'ro':0,'ti':0,'ea':'0','dt':0},{'mx':0,'my':0,'sx':1.04,'sy':1.04,'op':1,'ro':-2,'ti':2000,'ea':'0','dt':0},{'mx':0,'my':0,'sx':1,'sy':1,'op':1,'ro':0,'ti':2000,'ea':'0','dt':0}]"
+              data-field-filewidth-value="829"
+              data-field-fileheight-value="1260"
+              data-field-heightmode-value="hug"
+              data-field-top-res-320-value="586"
+              data-field-left-res-320-value="198"
+              data-field-height-res-320-value="319"
+              data-field-width-res-320-value="210"
+              data-field-left-res-480-value="252"
+              data-field-height-res-480-value="359"
+              data-field-left-res-640-value="327"
+              data-field-height-res-640-value="359"
+              data-field-left-res-960-value="488"
+              data-field-height-res-960-value="359"
+              data-fields="img,width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="left: 753.5px; top: 547px; width: 236px"
+            >
+              <div
+                class="tn-atom__sbs-anim-wrapper"
+                style="display: inherit; width: inherit; height: inherit"
+                id="sbs-2487446043-1780748451024000006"
+              >
+                <div class="tn-atom">
+                  <img
+                    class="tn-atom__img t-img loaded"
+                    data-original="https://static.tildacdn.net/tild3764-3461-4436-a562-636534643333/noroot.png"
+                    src="https://optim.tildacdn.net/tild3764-3461-4436-a562-636534643333/-/resize/472x/-/format/webp/noroot.png.webp"
+                    alt=""
+                    imgfield="tn_img_1780748451024000006"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431780144694093"
+              data-elem-id="1780144694093"
+              data-elem-type="image"
+              data-field-top-value="-785"
+              data-field-left-value="280"
+              data-field-height-value="735"
+              data-field-width-value="735"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-field-filewidth-value="1512"
+              data-field-fileheight-value="1512"
+              data-field-heightmode-value="hug"
+              data-field-height-res-320-value="735"
+              data-field-height-res-480-value="735"
+              data-field-height-res-640-value="735"
+              data-field-height-res-960-value="735"
+              data-fields="img,width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="left: 428.5px; top: -785px; width: 735px"
+            >
+              <div class="tn-atom">
+                <img
+                  class="tn-atom__img t-img loaded"
+                  data-original="https://static.tildacdn.net/tild3336-3462-4961-a332-613731663665/623915249_2629494717.png"
+                  src="https://optim.tildacdn.net/tild3336-3462-4961-a332-613731663665/-/format/webp/623915249_2629494717.png.webp"
+                  alt=""
+                  imgfield="tn_img_1780144694093"
+                />
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431780748008617000003 t-animate t-animate_wait"
+              data-elem-id="1780748008617000003"
+              data-elem-type="text"
+              data-field-top-value="899"
+              data-field-left-value="320"
+              data-field-height-value="129"
+              data-field-width-value="560"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-style="fadein"
+              data-animate-duration="1"
+              data-animate-mobile="y"
+              data-field-textfit-value="autoheight"
+              data-field-fontsize-value="41"
+              data-field-top-res-320-value="899"
+              data-field-left-res-320-value="-120"
+              data-field-height-res-320-value="129"
+              data-field-width-res-320-value="560"
+              data-field-top-res-480-value="899"
+              data-field-left-res-480-value="-40"
+              data-field-top-res-640-value="899"
+              data-field-left-res-640-value="40"
+              data-field-top-res-960-value="899"
+              data-field-left-res-960-value="200"
+              data-fields="top,left,width,height,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="
+                top: 899px;
+                left: 468.5px;
+                width: 560px;
+                height: auto;
+                transition-duration: 1s;
+              "
+              data-observer-ready="true"
+            >
+              <div
+                class="tn-atom"
+                field="tn_text_1780748008617000003"
+                style="--lh-px: 43px; line-height: 43px"
+              >
+                Two Souls <br />One destiny <br />A Lifetime written by Allah
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431780748008617000005 t-animate t-animate_wait"
+              data-elem-id="1780748008617000005"
+              data-elem-type="text"
+              data-field-top-value="1050"
+              data-field-left-value="447"
+              data-field-height-value="104"
+              data-field-width-value="307"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-style="fadein"
+              data-animate-duration="2"
+              data-animate-delay="0.2"
+              data-animate-mobile="y"
+              data-field-textfit-value="autoheight"
+              data-field-fontsize-value="21"
+              data-field-top-res-320-value="1050"
+              data-field-left-res-320-value="7"
+              data-field-top-res-480-value="1060"
+              data-field-left-res-480-value="87"
+              data-field-top-res-640-value="1060"
+              data-field-left-res-640-value="167"
+              data-field-left-res-960-value="327"
+              data-fields="top,left,width,height,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="
+                top: 1050px;
+                left: 595.5px;
+                width: 307px;
+                height: auto;
+                transition-delay: 0.2s;
+                transition-duration: 2s;
+              "
+              data-observer-ready="true"
+            >
+              <div
+                class="tn-atom"
+                field="tn_text_1780748008617000005"
+                style="--lh-px: 26px; line-height: 26px"
+              >
+                Dear Friends and Family <br />Join us for an evening of love,
+                laughter, duas, and unforgettable memories as we begin our
+                forever.
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431782235970224000001 t-sbs-anim_started"
+              data-elem-id="1782235970224000001"
+              data-elem-type="vector"
+              data-field-top-value="558"
+              data-field-left-value="588"
+              data-field-height-value="16"
+              data-field-width-value="25"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-animate-mobile="y"
+              data-animate-sbs-event="intoview"
+              data-animate-sbs-trg="1"
+              data-animate-sbs-trgofst="0"
+              data-animate-sbs-loop="loop"
+              data-animate-sbs-opts="[{'mx':0,'my':0,'sx':1,'sy':1,'op':1,'ro':0,'ti':0,'ea':'0','dt':0},{'mx':0,'my':5,'sx':1,'sy':1,'op':1,'ro':0,'ti':600,'ea':'0','dt':0},{'mx':0,'my':0,'sx':1,'sy':1,'op':1,'ro':0,'ti':500,'ea':'0','dt':0}]"
+              data-field-filewidth-value="25"
+              data-field-fileheight-value="16"
+              data-field-heightmode-value="hug"
+              data-field-left-res-320-value="148"
+              data-field-left-res-480-value="228"
+              data-field-left-res-640-value="308"
+              data-field-left-res-960-value="468"
+              data-fields="width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="width: 25px; left: 736.5px; top: 558px"
+            >
+              <div
+                class="tn-atom__sbs-anim-wrapper"
+                style="display: inherit; width: inherit; height: inherit"
+                id="sbs-2487446043-1782235970224000001"
+              >
+                <div class="tn-atom tn-atom__vector">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 25.00 15.86"
+                    data-guides='{"vertical":[],"horizontal":[]}'
+                    role="img"
+                    aria-label=""
+                  >
+                    <defs></defs>
+                    <path
+                      fill="none"
+                      stroke="#937100"
+                      fill-opacity="1"
+                      stroke-width="1"
+                      stroke-opacity="1"
+                      stroke-linecap="round"
+                      id="tSvgbd3f85d542"
+                      title="Path 1"
+                      d="M1.0092 1.008C4.3691 5.4431 9.1402 9.565 12.5 14C16.8007 9.565 19.6901 5.4431 23.9908 1.008"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431782235970225000002"
+              data-elem-id="1782235970225000002"
+              data-elem-type="text"
+              data-field-top-value="518"
+              data-field-left-value="442"
+              data-field-height-value="35"
+              data-field-width-value="316"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-field-textfit-value="autoheight"
+              data-field-fontsize-value="32"
+              data-field-left-res-320-value="2"
+              data-field-left-res-480-value="82"
+              data-field-left-res-640-value="162"
+              data-field-left-res-960-value="322"
+              data-fields="top,left,width,height,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="top: 518px; left: 590.5px; width: 316px; height: auto"
+            >
+              <div
+                class="tn-atom"
+                field="tn_text_1782235970225000002"
+                style="--lh-px: 35px; line-height: 35px"
+              >
+                Scroll down
+              </div>
+            </div>
+            <div
+              class="t396__elem tn-elem tn-elem__24874460431782312134224"
+              data-elem-id="1782312134224"
+              data-elem-type="image"
+              data-field-top-value="813"
+              data-field-left-value="459"
+              data-field-height-value="86"
+              data-field-width-value="283"
+              data-field-axisy-value="top"
+              data-field-axisx-value="left"
+              data-field-container-value="grid"
+              data-field-topunits-value="px"
+              data-field-leftunits-value="px"
+              data-field-heightunits-value="px"
+              data-field-widthunits-value="px"
+              data-field-filewidth-value="1022"
+              data-field-fileheight-value="312"
+              data-field-heightmode-value="hug"
+              data-field-left-res-320-value="19"
+              data-field-height-res-320-value="86"
+              data-field-left-res-480-value="99"
+              data-field-height-res-480-value="86"
+              data-field-left-res-640-value="179"
+              data-field-height-res-640-value="86"
+              data-field-left-res-960-value="339"
+              data-field-height-res-960-value="86"
+              data-fields="img,width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
+              style="left: 607.5px; top: 813px; width: 283px"
+            >
+              <div class="tn-atom">
+                <img
+                  class="tn-atom__img t-img loaded"
+                  data-original="https://static.tildacdn.net/tild3438-6238-4236-b537-366632636138/noroot.png"
+                  src="https://optim.tildacdn.net/tild3438-6238-4236-b537-366632636138/-/resize/566x/-/format/webp/noroot.png.webp"
+                  alt=""
+                  imgfield="tn_img_1782312134224"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+  <div id="envelopeOverlay" onclick="openInvitation()">
+    <div class="envelope-card">
+      <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #A67D2B;">
+        The Sacred Garden
+      </div>
+      
+      <div style="margin: 20px 0;">
+        <h2 style="font-family: 'Pinyon Script', cursive; font-size: 48px; color: #5A0F1B; line-height: 1;">
+          Asim &amp; Sevinc
+        </h2>
+        <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #A67D2B; margin-top: 6px;">
+          Wedding Day • 27.09.2026
+        </div>
+      </div>
+
+      <!-- Wax Seal -->
+      <div class="wax-seal">
+        <div class="seal-inner">
+          <span>A &amp; S</span>
+        </div>
+      </div>
+
+      <div class="tap-hint">
+        <div style="width: 10px; height: 10px; border-top: 2px solid #FCECCE; border-right: 2px solid #FCECCE; transform: rotate(-45deg);"></div>
+        <span style="font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;">
+          Dəvətnaməyə toxunun
+        </span>
+        <span style="font-family: 'Montserrat', sans-serif; font-size: 11px; opacity: 0.7;">
+          (Musiqi ilə açmaq üçün toxunun)
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MAIN INVITATION WRAPPER
+       ========================================== -->
+  <div class="invitation-container">
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-date-banner">
+        <div class="line"></div>
+        <span class="font-cinzel" style="font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #A67D2B; font-weight: 600;">
+          Wedding Day
+        </span>
+        <div class="line"></div>
+      </div>
+
+      <div class="font-cinzel" style="font-size: 14px; letter-spacing: 2px; color: #8A6820;">
+        27 Sentyabr 2026 • Bazar
+      </div>
+
+      <!-- Couple Names -->
+      <div class="hero-names">
+        <h1>Asim</h1>
+        <span class="ampersand">&amp;</span>
+        <h1>Sevinc</h1>
+      </div>
+
+      <!-- Quote -->
+      <div class="quote-block">
+        <p>Two Souls, One destiny,<br>A Lifetime written by Allah</p>
+        <div class="quote-trans">«İki qəlb, bir tale — Allahın bəxş etdiyi əbədi sevgi»</div>
+      </div>
+
+      <!-- Invitation Letter -->
+      <p class="invitation-text">
+        Əziz və dəyərli dostlar, qohumlar və ailəmiz!<br><br>
+        Həyatımızın ən gözəl və unudulmaz gününə qədəm qoyarkən, sevgi, dua və xoşbəxtlik dolu bu məqamı bizimlə bölüşməyinizdən şərəf duyarıq.
+      </p>
+    </section>
+
+    <!-- COUNTDOWN TIMER -->
+    <section class="countdown-section">
+      <div class="section-sub">Save The Date</div>
+      <h2 class="section-title">Təntənəyə Qalan Vaxt</h2>
+
+      <div class="countdown-grid gold-shadow">
+        <div class="time-box">
+          <div id="days" class="time-val gold-text">00</div>
+          <span class="time-lbl">Gün</span>
+        </div>
+        <div class="time-box">
+          <div id="hours" class="time-val gold-text">00</div>
+          <span class="time-lbl">Saat</span>
+        </div>
+        <div class="time-box">
+          <div id="minutes" class="time-val gold-text">00</div>
+          <span class="time-lbl">Dəqiqə</span>
+        </div>
+        <div class="time-box">
+          <div id="seconds" class="time-val gold-text">00</div>
+          <span class="time-lbl">Saniyə</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE TIMELINE -->
+    <section class="schedule-section">
+      <div style="text-align: center;">
+        <div class="section-sub">İtinerary</div>
+        <h2 class="section-title">Mərasimin Proqramı</h2>
+      </div>
+
+      <div class="timeline">
+        <!-- Event 1 -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">Qarşılanma</div>
+            <div class="timeline-desc">Xoş gəlmisiniz! Canlı musiqi sədaları altında qonaqların toplaşması.</div>
+          </div>
+          <div class="timeline-dot">✦</div>
+          <div class="timeline-time">
+            <div class="timeline-hour">17:00</div>
+          </div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">Kəbin Mərasimi</div>
+            <div class="timeline-desc">Müqəddəs kəbin andı və iki qəlbin əbədi birliyi.</div>
+          </div>
+          <div class="timeline-dot">✦</div>
+          <div class="timeline-time">
+            <div class="timeline-hour">18:00</div>
+          </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">Furşet &amp; Şəkillər</div>
+            <div class="timeline-desc">Xüsusi içkilər və bəy-gəlinlə xatirə fotoşəkilləri.</div>
+          </div>
+          <div class="timeline-dot">✦</div>
+          <div class="timeline-time">
+            <div class="timeline-hour">19:00</div>
+          </div>
+        </div>
+
+        <!-- Event 4 -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">Şam Yeməyi</div>
+            <div class="timeline-desc">Zəngin milli və Avropa mətbəxi ilə bəzədilmiş bayram süfrəsi.</div>
+          </div>
+          <div class="timeline-dot">✦</div>
+          <div class="timeline-time">
+            <div class="timeline-hour">20:00</div>
+          </div>
+        </div>
+
+        <!-- Event 5 -->
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">İlk Rəqs &amp; Əyləncə</div>
+            <div class="timeline-desc">Tort kəsimi, ilk rəqs və musiqi dolu unudulmaz gecə.</div>
+          </div>
+          <div class="timeline-dot">✦</div>
+          <div class="timeline-time">
+            <div class="timeline-hour">21:00</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VENUE & LOCATION -->
+    <section class="venue-section">
+      <div class="card gold-shadow">
+        <div class="section-sub">Məkan</div>
+        <h2 class="section-title" style="font-size: 34px;">The Sacred Garden Sarayı</h2>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #584132; margin-top: 8px;">
+          Böyük Ziyafət Zalı • Nizami küçəsi 142, Bakı, Azərbaycan
+        </p>
+
+        <div class="btn-group">
+          <a href="https://maps.google.com/?q=The+Sacred+Garden+Baku" target="_blank" class="btn-gold">
+            📍 Google Maps-də Aç
+          </a>
+          <a href="https://waze.com/ul?q=The+Sacred+Garden+Baku" target="_blank" class="btn-outline">
+            🚗 Waze ilə Get
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DRESS CODE -->
+    <section style="padding: 40px 20px; text-align: center;">
+      <div class="section-sub">Dress Code</div>
+      <h2 class="section-title">Geyim Qaydası</h2>
+      <p style="font-size: 18px; color: #584132; max-width: 500px; margin: 8px auto 0;">
+        Klassik və zərif axşam geyimlərində sizləri görməkdən məmnun olarıq:
+      </p>
+
+      <div class="dress-colors">
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: #F7F2E7;"></div>
+          <span class="swatch-label">Krem &amp; İnci</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: #D4AF37;"></div>
+          <span class="swatch-label">Qızılı</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: #E8C5B0;"></div>
+          <span class="swatch-label">Şaftalı</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: #5A0F1B;"></div>
+          <span class="swatch-label">Bordo</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: #1C3E2E;"></div>
+          <span class="swatch-label">Zümrüd</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP FORM -->
+    <section style="padding: 50px 20px; background: #FAF4E8;">
+      <div class="card gold-shadow">
+        <div class="section-sub">R.S.V.P</div>
+        <h2 class="section-title">İştirak Təsdiqi</h2>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 12px; color: #7A6250; margin-bottom: 20px;">
+          Zəhmət olmasa 15 Sentyabr tarixinədək cavablandırın
+        </p>
+
+        <form id="rsvpForm" onsubmit="submitRsvp(event)">
+          <div class="radio-group">
+            <div id="optAttend" class="radio-btn active" onclick="setAttendance('attending')">
+              ✓ İştirak edəcəyəm
+            </div>
+            <div id="optDecline" class="radio-btn" onclick="setAttendance('declining')">
+              ✗ Qatıla bilməyəcəyəm
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="guestName">Ad və Soyadınız *</label>
+            <input type="text" id="guestName" required class="form-control" placeholder="Məs: Rəşad Məmmədov">
+          </div>
+
+          <div class="form-group">
+            <label for="guestPhone">Əlaqə Nömrəniz</label>
+            <input type="tel" id="guestPhone" class="form-control" placeholder="+994 50 000 00 00">
+          </div>
+
+          <div class="form-group" id="guestCountGroup">
+            <label for="guestCount">Qonaq Sayı</label>
+            <select id="guestCount" class="form-control">
+              <option value="1">1 nəfər</option>
+              <option value="2">2 nəfər</option>
+              <option value="3">3 nəfər</option>
+              <option value="4">4 nəfər</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="guestNote">Təbrik və Arzularınız</label>
+            <textarea id="guestNote" rows="3" class="form-control" placeholder="Bəy və gəlinə arzularınız..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 14px;">
+            Təsdiqi Göndər
+          </button>
+        </form>
+
+        <div id="rsvpSuccess" style="display: none; padding: 20px 0;">
+          <h3 style="font-size: 28px; color: #5A0F1B;">Təşəkkür Edirik!</h3>
+          <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #584132; margin-top: 8px;">
+            İştirak təsdiqiniz uğurla qeydə alındı. Sizi aramızda görməyi səbirsizliklə gözləyirik!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #A67D2B;">
+        The Sacred Garden
+      </div>
+      <div style="font-family: 'Pinyon Script', cursive; font-size: 40px; color: #5A0F1B; margin: 4px 0;">
+        Asim &amp; Sevinc
+      </div>
+      <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: #8A6820;">
+        27.09.2026 • Baku, Azerbaijan
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==========================================
+       FLOATING AUDIO TOGGLE BUTTON
+       ========================================== -->
+  <button id="audioButton" onclick="toggleAudio()" title="Musiqini idarə et">
+    🎵
+  </button>
+
+  <!-- ==========================================
+       JAVASCRIPT LOGIC
+       ========================================== -->
+  <script>
+    // Audio Player & Envelope Opening
+    const audio = document.getElementById('weddingAudio');
+    const envelope = document.getElementById('envelopeOverlay');
+    const audioBtn = document.getElementById('audioButton');
+    let isPlaying = false;
+    let attendanceStatus = 'attending';
+
+    function openInvitation() {
+      envelope.classList.add('opened');
+      audio.volume = 0.8;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isPlaying = true;
+          audioBtn.innerHTML = '🔊';
+        }).catch(err => {
+          console.warn('Autoplay blocked', err);
+        });
+      }
+    }
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        isPlaying = true;
+        audioBtn.innerHTML = '🔊';
+      } else {
+        audio.pause();
+        isPlaying = false;
+        audioBtn.innerHTML = '🔇';
+      }
+    }
+
+    // Live Countdown Timer (Target: 27 September 2026, 17:00)
+    const targetDate = new Date('2026-09-27T17:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        document.getElementById('days').innerText = '00';
+        document.getElementById('hours').innerText = '00';
+        document.getElementById('minutes').innerText = '00';
+        document.getElementById('seconds').innerText = '00';
+        return;
+      }
+
+      const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+      document.getElementById('days').innerText = String(d).padStart(2, '0');
+      document.getElementById('hours').innerText = String(h).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+      document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // RSVP Attendance toggle
+    function setAttendance(status) {
+      attendanceStatus = status;
+      const optAttend = document.getElementById('optAttend');
+      const optDecline = document.getElementById('optDecline');
+      const guestGroup = document.getElementById('guestCountGroup');
+
+      if (status === 'attending') {
+        optAttend.classList.add('active');
+        optDecline.classList.remove('active');
+        guestGroup.style.display = 'block';
+      } else {
+        optDecline.classList.add('active');
+        optAttend.classList.remove('active');
+        guestGroup.style.display = 'none';
+      }
+    }
+
+    function submitRsvp(e) {
+      e.preventDefault();
+      const name = document.getElementById('guestName').value;
+      const phone = document.getElementById('guestPhone').value;
+      const count = document.getElementById('guestCount').value;
+      const note = document.getElementById('guestNote').value;
+
+      document.getElementById('rsvpForm').style.display = 'none';
+      document.getElementById('rsvpSuccess').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
