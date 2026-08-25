@@ -28,7 +28,7 @@
       height: 100%;
       background: #f5f0e9;
       font-family: Georgia, "Times New Roman", serif;
-      overflow: hidden; /* Əsas pəncərədə scroll-u kəsirik */
+      overflow: hidden; /* Əsas pəncərədə scrollbar görünmür */
       perspective: 1000px;
     }
 
@@ -44,19 +44,19 @@
       scroll-behavior: smooth;
       transform-style: preserve-3d;
 
-      /* SCROLLBAR-I GİZLƏYƏN HİSSƏ */
+      /* SCROLLBAR-I TAM GİZLƏYƏN CSS */
       -ms-overflow-style: none;  /* IE və Edge */
-      scrollbar-width: none;  /* Firefox */
+      scrollbar-width: none;     /* Firefox */
     }
 
-    /* Chrome, Safari, Opera üçün scrollbar-ı gizlədirik */
+    /* Chrome, Safari, Opera üçün Scrollbar-ı Gizlədirik */
     .invitation-card::-webkit-scrollbar {
       display: none;
       width: 0;
       height: 0;
     }
 
-    /* Hər bir slide tam 1 ekran boyda olur */
+    /* Hər bir slide tam 1 ekran ölçüsündə olur */
     .snap-section {
       width: 100%;
       height: 100dvh;
@@ -324,7 +324,7 @@
     }
 
     /* =====================================
-       4. SLIDE 2: RSVP SECTION
+       4. SLIDE 2: RSVP SECTION (3D PARALLAX)
     ===================================== */
     #rsvp-section {
       background: #faf7f2;
@@ -583,10 +583,24 @@
     const mainInvitation = document.getElementById("main-invitation");
     const rsvpCard = document.getElementById('parallax-rsvp-card');
 
+    // İLK TOXUNUŞDA TAM EKRAN REJİMİNƏ KEÇİD VƏ VİDEONU BAŞLATMA
     invitation.addEventListener("click", function() {
+      requestFullScreenMode(); // Səhifəni avtomatik Fullscreen edir
       openVideo();
-      toggleFullScreen(); // İstəyə bağlı olaraq ilk klikdə brauzeri tam ekran rejiminə keçirir
     });
+
+    function requestFullScreenMode() {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(err => console.log("Fullscreen xətası:", err));
+      } else if (docEl.webkitRequestFullscreen) { /* Safari / iOS */
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.msRequestFullscreen) { /* IE / Edge */
+        docEl.msRequestFullscreen();
+      } else if (docEl.mozRequestFullScreen) { /* Firefox */
+        docEl.mozRequestFullScreen();
+      }
+    }
 
     function openVideo() {
       invitation.style.display = "none";
@@ -619,25 +633,8 @@
       }, 1000);
     });
 
-    // BRAUZERİ TAM EKRAN (FULLSCREEN) ETMƏK ÜÇÜN FUNKSİYA
-    function toggleFullScreen() {
-      const elem = document.documentElement;
-      if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-          elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-        }
-      }
-    }
-
-    // Növbəti slide-a rəvan keçid funksiyası
+    // SÜRTÜNÜB SLIDE KEÇİDİ
     function scrollToRSVP() {
-      toggleFullScreen(); // Düyməyə kliklədikdə də tam ekran rejimi aktivləşir
       document.getElementById("rsvp-section").scrollIntoView({
         behavior: "smooth"
       });
@@ -649,6 +646,7 @@
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
 
+    // Maus ilə 4 istiqamətli fırlanma (Sağ, Sol, Yuxarı, Aşağı)
     rsvpCard.addEventListener('mousemove', (e) => {
       const rect = rsvpCard.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -657,8 +655,8 @@
       const percentX = (e.clientX - centerX) / (rect.width / 2);
       const percentY = (e.clientY - centerY) / (rect.height / 2);
 
-      targetY = percentX * 14; 
-      targetX = -percentY * 14; 
+      targetY = percentX * 15;  // Sağ - Sol
+      targetX = -percentY * 15; // Yuxarı - Aşağı
     });
 
     rsvpCard.addEventListener('mouseleave', () => {
@@ -696,7 +694,7 @@
 
     function sendToWhatsApp(event) {
       event.preventDefault();
-      const phoneNumber = "994500000000"; // Öz WhatsApp nömrəniz
+      const phoneNumber = "994500000000"; // Öz WhatsApp nömrənizi qeyd edin
 
       const name = document.getElementById('guest-name').value.trim();
       const status = document.getElementById('attendance-status').value;
