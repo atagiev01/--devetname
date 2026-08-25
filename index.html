@@ -31,8 +31,7 @@
       background: #f5f0e9;
       font-family: Georgia, "Times New Roman", serif;
       overflow-x: hidden;
-      /* 3D hərəkət zamanı kənarların kəsilməməsi üçün perspektiv */
-      perspective: 1000px;
+      perspective: 1200px; /* Stabil 3D dərinlik hiss etdirmək üçün */
     }
 
     .invitation-card {
@@ -41,9 +40,7 @@
       margin: 0 auto;
       background: #fff;
       position: relative;
-      /* 3D rotate effekti üçün */
       transform-style: preserve-3d;
-      transition: transform 0.1s ease-out;
       will-change: transform;
     }
 
@@ -492,11 +489,9 @@
       });
     }
 
-    // Video bitdikdən sonra işə düşən funksiya
     openingVideo.addEventListener("ended", function() {
       mainInvitation.style.display = "block";
       
-      // 1. .name klasındakı adlara animasiya tətbiq olunur
       const nameElements = document.querySelectorAll(".name");
       nameElements.forEach(nameEl => {
         nameEl.classList.add("animate__animated", "animate__backInDown");
@@ -526,44 +521,65 @@
       });
     }
 
-    // 2. Telefon hərəkət etdikdə kartın 3D dönməsi (Giroskop)
-// Telefon hərəkət etdikdə kartın 3 ox üzrə (X, Y, Z) tam 3D dönməsi
+    /* =======================================================
+       STABİL 3D FİRANMA VƏ LERP (INTERPOLATION) SİSTEMİ
+    ======================================================= */
+    let targetRotateX = 0;
+    let targetRotateY = 0;
+    let currentRotateX = 0;
+    let currentRotateY = 0;
+
+    let initialBeta = null;
+    let initialGamma = null;
+
     function handleOrientation(event) {
-      let x = event.gamma; // Sağa-sola əyilmə (-90 ilə 90)
-      let y = event.beta;  // Yuxarı-aşağı əyilmə (-180 ilə 180)
-      let z = event.alpha; // Telefonun düz müstəvidə fırlanması (0 ilə 360)
+      const beta = event.beta;   // X-oxu (yuxarı-aşağı) [-180, 180]
+      const gamma = event.gamma; // Y-oxu (sağ-sol) [-90, 90]
 
-      if (x === null || y === null) return;
+      if (beta === null || gamma === null) return;
 
-      // Hərəkətin həddindən artıq kəskin olmaması üçün maksimum dərəcələri məhdudlaşdırırıq:
-      
-      // 1. Sağa-sola dönmə (Rotate Y) - maks ±25 dərəcə
-      let rotateY = Math.max(-25, Math.min(25, x)); 
+      // İlk oxunan mövqeyi sıfır baza nöqtəsi olaraq qeyd edirik
+      if (initialBeta === null || initialGamma === null) {
+        initialBeta = beta;
+        initialGamma = gamma;
+      }
 
-      // 2. Yuxarı-aşağı dönmə (Rotate X) - maks ±25 dərəcə
-      let rotateX = Math.max(-25, Math.min(25, -y / 2)); 
+      // Başlanğıc mövqeyə nisbətən kənara çıxma dərəcəsini tapırıq
+      let deltaX = beta - initialBeta;
+      let deltaY = gamma - initialGamma;
 
-      // 3. Əldə burulma / çəpləşmə (Rotate Z / Tilt) - maks ±10 dərəcə
-      let rotateZ = Math.max(-10, Math.min(10, (x / 3)));
+      // Hərəkət bucağını maksimal ±15 dərəcə ilə məhdudlaşdırırıq (Həddindən artıq fırlanmanın qarşısını almaq üçün)
+      targetRotateX = Math.max(-15, Math.min(15, -deltaX * 0.2));
+      targetRotateY = Math.max(-15, Math.min(15, deltaY * 0.2));
+    }
+
+    // Animasiya Çərçivəsi (Render Loop) - Kəskin hərəkətləri hamarlayır
+    function updateCardTransform() {
+      // Lerp (Linear Interpolation) formulu: current + (target - current) * factor
+      // 0.08 faktoru vizual olaraq çox hamar və stabil bir sürüşmə verir
+      currentRotateX += (targetRotateX - currentRotateX) * 0.04;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.04;
 
       if (card) {
-        // Hər 3 ox üzrə transformasiya tətbiq olunur
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+        card.style.transform = `rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg)`;
       }
+
+      requestAnimationFrame(updateCardTransform);
     }
+
     function enableGyroscope() {
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // iOS 13+ üçün icazə istəyi
         DeviceOrientationEvent.requestPermission()
           .then(permissionState => {
             if (permissionState === 'granted') {
               window.addEventListener('deviceorientation', handleOrientation);
+              requestAnimationFrame(updateCardTransform);
             }
           })
           .catch(console.error);
       } else {
-        // Android və digər cihazlar üçün
         window.addEventListener('deviceorientation', handleOrientation);
+        requestAnimationFrame(updateCardTransform);
       }
     }
   </script>
