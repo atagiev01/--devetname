@@ -16,7 +16,7 @@
   />
   <style>
     /* =====================================
-       1. BAZA VƏ MOBİL STİLLER
+       1. BAZA VƏ PARALLAX 3D PERSPEKTİV
     ===================================== */
     * {
       box-sizing: border-box;
@@ -31,6 +31,7 @@
       background: #f5f0e9;
       font-family: Georgia, "Times New Roman", serif;
       overflow-x: hidden;
+      perspective: 1000px; /* 3D Dərinlik Perspektivi */
     }
 
     .invitation-card {
@@ -39,6 +40,8 @@
       margin: 0 auto;
       background: #fff;
       position: relative;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
 
     /* =====================================
@@ -82,12 +85,13 @@
     }
 
     /* =====================================
-       3. HERO SECTION (Əsas Səhifə)
+       3. HERO SECTION & PARALLAX QATLARI
     ===================================== */
     #main-invitation {
       width: 100%;
       opacity: 0;
       transition: opacity 0.5s ease;
+      transform-style: preserve-3d;
     }
 
     #main-invitation.fade-in {
@@ -102,6 +106,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transform-style: preserve-3d;
     }
 
     .hero-background {
@@ -109,6 +114,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
+      transform: translateZ(-20px) scale(1.1); /* Fon qatı arxada qalır */
     }
 
     .hero-background video {
@@ -123,7 +129,7 @@
       background: rgba(255, 178, 0, 0.2);
     }
 
-    /* Hero İçerik və Şəffaf Mövzu */
+    /* Parallaks Qatları (Dərinliklər) */
     .hero-content.image-style-theme {
       position: relative;
       z-index: 10;
@@ -134,6 +140,7 @@
       padding: 25px 15px 15px;
       text-align: center;
       color: #6d4c1b;
+      transform-style: preserve-3d;
     }
 
     .outer-gold-border {
@@ -142,12 +149,14 @@
       border: 1px solid rgba(181, 142, 80, 0.45);
       pointer-events: none;
       z-index: 1;
+      transform: translateZ(15px); /* Qızılı çərçivə irəli çıxır */
     }
 
     .hero-top {
       position: relative;
       z-index: 2;
       margin-top: 5px;
+      transform: translateZ(40px); /* Adlar və başlığın 3D çıxıntısı */
     }
 
     .getting-married {
@@ -189,7 +198,7 @@
       font-family: 'Alex Brush', cursive;
       font-size: clamp(45px, 12vw, 65px);
       color: #7a551e;
-      text-shadow: 0px 1px 2px rgba(255, 255, 255, 0.8);
+      text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .ampersand {
@@ -201,7 +210,7 @@
       margin: -8px 0;
     }
 
-    /* Ortadakı Sitat Bloku */
+    /* Ortadakı Tarix Bloku */
     .quote-box {
       margin: 6px auto 0;
       padding: 6px 10px;
@@ -209,25 +218,9 @@
       border: 1px solid rgba(196, 194, 192, 0.35);
       background: rgba(196, 194, 192, 0.35);
       backdrop-filter: blur(3px);
+      transform: translateZ(30px); /* 3D dərinlik */
     }
 
-    .quote-box p {
-      font-family: 'Cinzel', serif;
-      font-size: 18px;
-      letter-spacing: 0.18em;
-      line-height: 1.5;
-      color: #4a320c;
-      font-weight: 600;
-    }
-
-    .heart-icon {
-      display: block;
-      font-size: 8px;
-      color: #a37c3f;
-      margin-top: 2px;
-    }
-
-    /* Tarix Hissəsi (Nizamlanmış) */
     .hero-bottom {
       position: relative;
       z-index: 2;
@@ -243,13 +236,10 @@
       gap: 12px;
       margin-bottom: 4px;
     }
-    .date-container>*{
-      font-size: 20px !important;
-    }
 
     .date-side {
       font-family: 'Cinzel', serif;
-      font-size: 10px;
+      font-size: 12px !important;
       letter-spacing: 0.25em;
       color: #4a320c;
       font-weight: 600;
@@ -259,14 +249,6 @@
       width: 1px;
       height: 18px;
       background: rgba(181, 142, 80, 0.5);
-    }
-
-    .date-main {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px;
-      font-weight: 600;
-      color: #4a320c;
-      line-height: 1;
     }
 
     .waiting-text {
@@ -293,14 +275,6 @@
       font-weight: 600;
     }
 
-    .sub-info {
-      font-size: 6.5px;
-      letter-spacing: 0.12em;
-      opacity: 0.85;
-      margin-top: 2px;
-    }
-
-    /* Parıldayan RSVP Düyməsi */
     @keyframes glow {
       from {
         opacity: 0.4;
@@ -332,6 +306,7 @@
       gap: 4px;
       padding-bottom: clamp(15px, 4vh, 25px);
       cursor: pointer;
+      transform: translateZ(25px);
     }
 
     .arrow {
@@ -344,19 +319,135 @@
       50% { transform: translateY(5px); }
     }
 
-    /* RSVP Bölməsi */
+    /* =====================================
+       4. RSVP SECTION & WHATSAPP FORM
+    ===================================== */
     #rsvp-section {
       min-height: 100dvh;
-      background: #fff;
+      background: #faf7f2;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 40px 24px;
+      padding: 40px 20px;
+      transform-style: preserve-3d;
     }
 
-    /* Desktop Düzeni */
+    .rsvp-title-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #8c6a32;
+      margin-bottom: 8px;
+    }
+
+    .rsvp-title {
+      font-family: 'Alex Brush', cursive;
+      font-size: clamp(38px, 10vw, 52px);
+      color: #5c3e10;
+      margin: 0 0 10px;
+      font-weight: normal;
+    }
+
+    .rsvp-desc {
+      max-width: 320px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      line-height: 1.5;
+      color: #665235;
+      margin: 0 auto 28px;
+    }
+
+    .rsvp-form {
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transform: translateZ(20px);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: #5c3e10;
+      font-weight: 600;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid rgba(181, 142, 80, 0.4);
+      background: #fff;
+      border-radius: 6px;
+      font-family: Georgia, serif;
+      font-size: 14px;
+      color: #4a320c;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: #a37c3f;
+    }
+
+    .attendance-options {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .attendance-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: 1px solid rgba(181, 142, 80, 0.4);
+      background: #fff;
+      border-radius: 6px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #5c3e10;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .attendance-btn.active {
+      background: #5c3e10;
+      color: #fff;
+      border-color: #5c3e10;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      border: none;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
     @media (min-width: 601px) {
       body {
         display: flex;
@@ -418,10 +509,9 @@
               <span class="ampersand">&amp;</span>
               <span class="name">Sevinc</span>
             </h1>
-
           </div>
 
-          <!-- Aşağı Hissə (Tarix və Məlumat) -->
+          <!-- Aşağı Hissə -->
           <div class="hero-bottom quote-box">
             <div class="date-container">
               <span class="date-side">12</span>
@@ -447,157 +537,20 @@
         </button>
       </section>
 
-      <!-- RSVP Bölməsi -->
- <!-- RSVP Bölməsi (Yenilənmiş Form Hissəsi) -->
+      <!-- 3. RSVP BÖLMƏSİ -->
       <section id="rsvp-section">
-        <style>
-          #rsvp-section {
-            min-height: 100dvh;
-            background: #faf7f2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px 20px;
-          }
-
-          .rsvp-title-sub {
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            letter-spacing: 0.35em;
-            text-transform: uppercase;
-            color: #8c6a32;
-            margin-bottom: 8px;
-          }
-
-          .rsvp-title {
-            font-family: 'Alex Brush', cursive;
-            font-size: clamp(38px, 10vw, 52px);
-            color: #5c3e10;
-            margin: 0 0 10px;
-            font-weight: normal;
-          }
-
-          .rsvp-desc {
-            max-width: 320px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 17px;
-            line-height: 1.5;
-            color: #665235;
-            margin: 0 auto 28px;
-          }
-
-          .rsvp-form {
-            width: 100%;
-            max-width: 340px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-          }
-
-          .form-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 6px;
-          }
-
-          .form-group label {
-            font-family: 'Cinzel', serif;
-            font-size: 10px;
-            letter-spacing: 0.15em;
-            color: #5c3e10;
-            font-weight: 600;
-          }
-
-          .form-input, .form-select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid rgba(181, 142, 80, 0.4);
-            background: #fff;
-            border-radius: 6px;
-            font-family: Georgia, serif;
-            font-size: 14px;
-            color: #4a320c;
-            outline: none;
-            transition: border-color 0.3s ease;
-          }
-
-          .form-input:focus, .form-select:focus {
-            border-color: #a37c3f;
-          }
-
-          .attendance-options {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-          }
-
-          .attendance-btn {
-            flex: 1;
-            padding: 12px 8px;
-            border: 1px solid rgba(181, 142, 80, 0.4);
-            background: #fff;
-            border-radius: 6px;
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            color: #5c3e10;
-            cursor: pointer;
-            transition: all 0.3s ease;
-          }
-
-          .attendance-btn.active {
-            background: #5c3e10;
-            color: #fff;
-            border-color: #5c3e10;
-          }
-
-          .submit-btn {
-            width: 100%;
-            padding: 14px;
-            margin-top: 8px;
-            border: none;
-            background: linear-gradient(135deg, #a37c3f, #5c3e10);
-            color: #fff;
-            font-family: 'Cinzel', serif;
-            font-size: 12px;
-            letter-spacing: 0.2em;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(92, 62, 16, 0.2);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-          }
-
-          .submit-btn:active {
-            transform: scale(0.98);
-          }
-
-          .success-msg {
-            display: none;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
-            color: #2e6b30;
-            margin-top: 15px;
-          }
-        </style>
-
         <p class="rsvp-title-sub">R S V P</p>
         <h2 class="rsvp-title">Sizi gözləyirik</h2>
         <p class="rsvp-desc">
           Həyatımızın ən gözəl və unudulmaz başlanğıcında sevincimizi sizinlə bölüşmək bizim üçün ən böyük dəyərdir.
         </p>
 
-        <form class="rsvp-form" id="wedding-rsvp-form" onsubmit="handleRSVPSubmit(event)">
-          <!-- Ad və Soyad -->
+        <form class="rsvp-form" id="wedding-rsvp-form" onsubmit="sendToWhatsApp(event)">
           <div class="form-group">
             <label for="guest-name">AD VƏ SOYADINIZ</label>
             <input type="text" id="guest-name" class="form-input" placeholder="Məs: Əli Əliyev" required>
           </div>
 
-          <!-- İştirak Seçimi -->
           <div class="form-group">
             <label>İŞTİRAK EDƏCƏKSİNİZ?</label>
             <div class="attendance-options">
@@ -607,19 +560,19 @@
             <input type="hidden" id="attendance-status" value="Gələcəyəm">
           </div>
 
-          <!-- Qonaq Sayı -->
           <div class="form-group" id="guest-count-group">
             <label for="guest-count">QONAQ SAYI</label>
             <select id="guest-count" class="form-select">
-              <option value="1">1 Nəfər</option>
-              <option value="2">2 Nəfər</option>
-              <option value="3">3 Nəfər</option>
-              <option value="4+">4 və daha çox</option>
+              <option value="1 nəfər">1 Nəfər</option>
+              <option value="2 nəfər">2 Nəfər</option>
+              <option value="3 nəfər">3 Nəfər</option>
+              <option value="4+ nəfər">4 və daha çox</option>
             </select>
           </div>
 
-          <button type="submit" class="submit-btn">TƏSDİQLƏ</button>
-          <div class="success-msg" id="success-message">Təşəkkür edirik! Cavabınız qeydə alındı. ✨</div>
+          <button type="submit" class="submit-btn">
+            WHATSAPP İLƏ TƏSDİQLƏ
+          </button>
         </form>
       </section>
 
@@ -631,8 +584,12 @@
     const openingScreen = document.getElementById("opening-screen");
     const openingVideo = document.getElementById("opening-video");
     const mainInvitation = document.getElementById("main-invitation");
+    const card = document.querySelector('.invitation-card');
 
-    invitation.addEventListener("click", openVideo);
+    invitation.addEventListener("click", function() {
+      openVideo();
+      enableGyroscope();
+    });
 
     function openVideo() {
       invitation.style.display = "none";
@@ -648,7 +605,6 @@
     openingVideo.addEventListener("ended", function() {
       mainInvitation.style.display = "block";
       
-      // .name klası olan hər iki ada (Asim və Sevinc) animasiya tətbiq edirik:
       const nameElements = document.querySelectorAll(".name");
       nameElements.forEach(nameEl => {
         nameEl.classList.add("animate__animated", "animate__backInDown");
@@ -678,7 +634,76 @@
       });
     }
 
-    // RSVP Düymə Seçimi
+    /* =======================================================
+       HAMAR PARALLAX ROTATE EFFEKTİ (Giroskop + Maus)
+    ======================================================= */
+    let targetRotateX = 0;
+    let targetRotateY = 0;
+    let currentRotateX = 0;
+    let currentRotateY = 0;
+
+    let initialBeta = null;
+    let initialGamma = null;
+
+    // Mobil Giroskop Dinləyicisi
+    function handleOrientation(event) {
+      const beta = event.beta;
+      const gamma = event.gamma;
+
+      if (beta === null || gamma === null) return;
+
+      if (initialBeta === null || initialGamma === null) {
+        initialBeta = beta;
+        initialGamma = gamma;
+      }
+
+      let deltaX = beta - initialBeta;
+      let deltaY = gamma - initialGamma;
+
+      targetRotateX = Math.max(-12, Math.min(12, -deltaX * 0.3));
+      targetRotateY = Math.max(-12, Math.min(12, deltaY * 0.3));
+    }
+
+    // Kompüter/Maus İdarəetməsi
+    window.addEventListener('mousemove', (e) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth - 0.5) * 2;
+      const y = (e.clientY / innerHeight - 0.5) * 2;
+
+      targetRotateY = x * 10;
+      targetRotateX = -y * 10;
+    });
+
+    // Lerp Animation Loop (Ultra Hamar Çərçivə)
+    function updateCardTransform() {
+      currentRotateX += (targetRotateX - currentRotateX) * 0.06;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.06;
+
+      if (card) {
+        card.style.transform = `rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg)`;
+      }
+
+      requestAnimationFrame(updateCardTransform);
+    }
+
+    function enableGyroscope() {
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              window.addEventListener('deviceorientation', handleOrientation);
+            }
+          })
+          .catch(console.error);
+      } else {
+        window.addEventListener('deviceorientation', handleOrientation);
+      }
+      requestAnimationFrame(updateCardTransform);
+    }
+
+    /* =======================================================
+       RSVP WHATSAPP FUNTSIYALARI
+    ======================================================= */
     function selectAttendance(btn, status) {
       document.querySelectorAll('.attendance-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -692,24 +717,26 @@
       }
     }
 
-    // Form Göndərildikdə İşləyən Funksiya
-    function handleRSVPSubmit(e) {
-      e.preventDefault();
+    function sendToWhatsApp(event) {
+      event.preventDefault();
       
-      const name = document.getElementById('guest-name').value;
+      // WhatsApp nömrəniz (+ işarəsiz)
+      const phoneNumber = "994500000000"; 
+
+      const name = document.getElementById('guest-name').value.trim();
       const status = document.getElementById('attendance-status').value;
       const count = document.getElementById('guest-count').value;
 
-      // Burada form datalarını backend-ə (WhatsApp, Telegram bot və ya Google Sheets) göndərə bilərsiniz.
-      console.log("RSVP Məlumatı:", { name, status, count });
+      let text = `Salam! Toy dəvətnaməsi üçün RSVP cavabı:\n\n`;
+      text += `👤 *Ad Soyad:* ${name}\n`;
+      text += `📌 *İştirak:* ${status}\n`;
 
-      const successMsg = document.getElementById('success-message');
-      successMsg.style.display = 'block';
-      document.getElementById('wedding-rsvp-form').reset();
-      
-      setTimeout(() => {
-        successMsg.style.display = 'none';
-      }, 4000);
+      if (status === 'Gələcəyəm') {
+        text += `👥 *Qonaq Sayı:* ${count}\n`;
+      }
+
+      const encodedText = encodeURIComponent(text);
+      window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
     }
   </script>
 
