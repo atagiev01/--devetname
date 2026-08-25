@@ -527,23 +527,30 @@
     }
 
     // 2. Telefon hərəkət etdikdə kartın 3D dönməsi (Giroskop)
+// Telefon hərəkət etdikdə kartın 3 ox üzrə (X, Y, Z) tam 3D dönməsi
     function handleOrientation(event) {
-      let x = event.gamma; // Sağa-sola əyilmə (-90 ilə 90 dərəcə)
-      let y = event.beta;  // Yuxarı-aşağı əyilmə (-180 ilə 180 dərəcə)
+      let x = event.gamma; // Sağa-sola əyilmə (-90 ilə 90)
+      let y = event.beta;  // Yuxarı-aşağı əyilmə (-180 ilə 180)
+      let z = event.alpha; // Telefonun düz müstəvidə fırlanması (0 ilə 360)
 
       if (x === null || y === null) return;
 
-      // Dönmə həddini maks ±20 dərəcə ilə məhdudlaşdırırıq
-      if (x > 20) x = 20;
-      if (x < -20) x = -20;
-      if (y > 20) y = 20;
-      if (y < -20) y = -20;
+      // Hərəkətin həddindən artıq kəskin olmaması üçün maksimum dərəcələri məhdudlaşdırırıq:
+      
+      // 1. Sağa-sola dönmə (Rotate Y) - maks ±25 dərəcə
+      let rotateY = Math.max(-25, Math.min(25, x)); 
+
+      // 2. Yuxarı-aşağı dönmə (Rotate X) - maks ±25 dərəcə
+      let rotateX = Math.max(-25, Math.min(25, -y / 2)); 
+
+      // 3. Əldə burulma / çəpləşmə (Rotate Z / Tilt) - maks ±10 dərəcə
+      let rotateZ = Math.max(-10, Math.min(10, (x / 3)));
 
       if (card) {
-        card.style.transform = `rotateY(${x}deg) rotateX(${-y / 2}deg)`;
+        // Hər 3 ox üzrə transformasiya tətbiq olunur
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
       }
     }
-
     function enableGyroscope() {
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         // iOS 13+ üçün icazə istəyi
