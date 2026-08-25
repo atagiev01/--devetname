@@ -862,14 +862,14 @@
       let deltaX = e.beta - initialBeta;
       let deltaY = e.gamma - initialGamma;
 
-      targetX = Math.max(-12, Math.min(12, -deltaX * 0.2));
-      targetY = Math.max(-12, Math.min(12, deltaY * 0.2));
+      targetX = Math.max(-12, Math.min(16, -deltaX * 0.8));
+      targetY = Math.max(-16, Math.min(16, deltaY * 0.8));
     });
 
     // Kadr Hamarlama (Lerp Loop)
     function animateParallax() {
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
+      currentX += (targetX - currentX) * 0.6;
+      currentY += (targetY - currentY) * 0.6;
 
       if (rsvpCard) {
         rsvpCard.style.transform = `rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg)`;
