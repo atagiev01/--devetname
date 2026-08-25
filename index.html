@@ -616,7 +616,7 @@
   </style>
 
   <!-- 3D Parallax Yellənən Kart -->
-  <div class="rsvp-card" id="parallax-rsvp-card">
+  <div class="rsvp-card" >
     <div class="rsvp-border"></div>
 
     <div class="rsvp-header">
@@ -661,6 +661,157 @@
     </form>
   </div>
 
+
+
+  <!-- MƏKAN VƏ RSVP BÖLMƏLƏRİ -->
+<div class="wedding-sections" >
+  <style>
+    .wedding-sections {
+      width: 100%;
+
+      padding: 40px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      font-family: Georgia, serif;
+    }
+
+    /* Şəkildəki yumşaq ağ kart stili */
+    .info-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid #D4AF37; /* Qızılı çərçivə */
+      border-radius: 24px;
+      padding: 32px 20px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(74, 56, 34, 0.14);
+    }
+
+    .card-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: #a37c3f;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .card-address {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    /* Qızılı vuruğlu düymələr */
+    .btn-gold-filled {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      background: #cba358;
+      color: #fff;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-gold-outline {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cba358;
+      background: #fff;
+      color: #cba358;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-gold-filled:hover, .btn-gold-outline:hover {
+      opacity: 0.9;
+    }
+
+    .sub-note {
+      font-size: 11px;
+      color: #8c7247;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+  </style>
+
+  <!-- 1. MƏKAN MƏLUMATI KARTI -->
+  <div class="info-card" id="parallax-rsvp-card">
+    <p class="card-subtitle">M Ə K A N &nbsp; M Ə L U M A T I</p>
+    <h3 class="card-title">Ay Ulduz Şadlıq Sarayı</h3>
+    <p class="card-address">Naftalan şəhəri, Ay Ulduz Şadlıq Sarayı, Bayraq Meydanı</p>
+
+    <!-- Xəritə Linkləri -->
+    <a href="https://maps.google.com" target="_blank" class="btn-gold-filled">
+      📍 GOOGLE MAPS-DƏ AÇIN
+    </a>
+    <a href="https://waze.com" target="_blank" class="btn-gold-outline">
+      🧭 WAZE İLƏ ÜNVANA GET
+    </a>
+  </div>
+
+  <!-- 2. İŞTİRAK BİLDİRİŞİ KARTI -->
+  <div class="info-card">
+    <p class="card-subtitle">L Ü T F Ə N &nbsp; İ Ş T İ R A K I N I Z I &nbsp; B İ L D İ R İ N</p>
+    <p class="card-address" style="margin-bottom: 20px; font-style: italic;">
+      Mərasimdə iştirak edəcəyinizi öncədən bildirməyinizi xahiş edirik.
+    </p>
+
+    <!-- Hərəkət Düymələri -->
+    <button class="btn-gold-filled" onclick="sendRSVP('İştirak edəcəyəm')">
+      ✓ İŞTİRAK EDƏCƏYƏM
+    </button>
+    <button class="btn-gold-outline" onclick="sendRSVP('Gələ bilmirəm')">
+      ✕ GƏLƏ BİLMİRƏM
+    </button>
+
+    <div class="sub-note">
+      👥 Ətraflı Qonaq Qeydiyyatı (Qonaq Sayı Və Qeydlər)
+    </div>
+  </div>
+</div>
+
+<script>
+  function sendRSVP(status) {
+    const phoneNumber = "994500000000"; // Öz WhatsApp nömrəniz
+    const message = encodeURIComponent(`Salam, toy mərasimi üçün cavabım: ${status}`);
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  }
+</script>
   <script>
     /* =======================================================
        1. PARALLAX 3D TILT & ROTATE EFFECT (MAUS VƏ MOBİL)
@@ -672,20 +823,29 @@
     let currentX = 0;
     let currentY = 0;
 
-    // Maus Hərəkəti ilə Parallaks (Desktop)
+// Maus Hərəkəti ilə Parallaks (Desktop) - 4 İstiqamətli (Sağ, Sol, Yuxarı, Aşağı)
     rsvpCard.addEventListener('mousemove', (e) => {
       const rect = rsvpCard.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+      
+      // Kartın tam mərkəz nöqtəsini tapırıq
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
 
-      targetY = (x / (rect.width / 2)) * 12;  // Rotate Y (max ±12deg)
-      targetX = -(y / (rect.height / 2)) * 12; // Rotate X (max ±12deg)
+      // Mausun mərkəzdən olan məsafəsini cıxarırıq (-1 ilə +1 arasında nisbət alır)
+      const percentX = (e.clientX - centerX) / (rect.width / 2);
+      const percentY = (e.clientY - centerY) / (rect.height / 2);
+
+      // Rotate Y (Sağ-Sol) vər Rotate X (Yuxarı-Aşağı) dərəcələri
+      targetY = percentX * 20;  // Sağ / Sol əyilmə açısı (max ±20deg)
+      targetX = -percentY * 20; // Yuxarı / Aşağı əyilmə açısı (max ±15deg)
     });
 
+    // Maus kartın üzərindən çıxanda kartın ilk düz halına qaytarılması
     rsvpCard.addEventListener('mouseleave', () => {
       targetX = 0;
       targetY = 0;
     });
+
 
     // Mobil Giroskopilə Parallaks (Phone Gyro)
     let initialBeta = null;
@@ -702,8 +862,8 @@
       let deltaX = e.beta - initialBeta;
       let deltaY = e.gamma - initialGamma;
 
-      targetX = Math.max(-12, Math.min(12, -deltaX * 0.4));
-      targetY = Math.max(-12, Math.min(12, deltaY * 0.4));
+      targetX = Math.max(-12, Math.min(12, -deltaX * 0.2));
+      targetY = Math.max(-12, Math.min(12, deltaY * 0.2));
     });
 
     // Kadr Hamarlama (Lerp Loop)
@@ -739,7 +899,7 @@
       event.preventDefault();
 
       // Öz WhatsApp nömrənizi qeyd edin (+ işarəsiz, məs: 994501234567)
-      const phoneNumber = "994500000000"; 
+      const phoneNumber = "994556519390"; // Əlaqə üçün WhatsApp nömrəsi
 
       const name = document.getElementById('guest-name').value.trim();
       const status = document.getElementById('attendance-status').value;
