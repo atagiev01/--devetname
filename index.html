@@ -28,7 +28,7 @@
       height: 100%;
       background: #f5f0e9;
       font-family: Georgia, "Times New Roman", serif;
-      overflow: hidden; /* Əsas pəncərədə scrollbar görünmür */
+      overflow: hidden;
       perspective: 1000px;
     }
 
@@ -38,25 +38,21 @@
       margin: 0 auto;
       background: #fff;
       position: relative;
-      /* Scroll-Snap Slide rejimi */
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
       scroll-behavior: smooth;
       transform-style: preserve-3d;
 
-      /* SCROLLBAR-I TAM GİZLƏYƏN CSS */
-      -ms-overflow-style: none;  /* IE və Edge */
-      scrollbar-width: none;     /* Firefox */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
 
-    /* Chrome, Safari, Opera üçün Scrollbar-ı Gizlədirik */
     .invitation-card::-webkit-scrollbar {
       display: none;
       width: 0;
       height: 0;
     }
 
-    /* Hər bir slide tam 1 ekran ölçüsündə olur */
     .snap-section {
       width: 100%;
       height: 100dvh;
@@ -64,6 +60,11 @@
       scroll-snap-stop: always;
       position: relative;
       overflow: hidden;
+    }
+
+    /* Animasiya başlamazdan əvvəl gizli qalması üçün */
+    .animated-element {
+      opacity: 0;
     }
 
     /* =====================================
@@ -494,22 +495,22 @@
           <div class="outer-gold-border"></div>
 
           <div class="hero-top">
-            <p class="getting-married">TOYUMUZA DƏVƏTLİSİNİZ</p>
-            <div class="top-ornament">
+            <p class="getting-married animated-element" style="animation-delay: 0.2s;">TOYUMUZA DƏVƏTLİSİNİZ</p>
+            <div class="top-ornament animated-element" style="animation-delay: 0.4s;">
               <span class="ornament-line"></span>
               <span class="ornament-icon">🕃 ✦ 🕄</span>
               <span class="ornament-line"></span>
             </div>
 
             <h1 class="names">
-              <span class="name">Asim</span>
-              <span class="ampersand">&amp;</span>
-              <span class="name">Sevinc</span>
+              <span class="name animated-element" style="animation-delay: 0.6s;">Asim</span>
+              <span class="ampersand animated-element" style="animation-delay: 0.8s;">&amp;</span>
+              <span class="name animated-element" style="animation-delay: 1s;">Sevinc</span>
             </h1>
           </div>
 
-          <div class="hero-bottom quote-box">
-            <div class="date-container">
+          <div class="hero-bottom quote-box animated-element" style="animation-delay: 1.2s;">
+            <div class="date-container animated-element" style="animation-delay: 1.4s;">
               <span class="date-side">12</span>
               <span class="date-divider"></span>
               <span class="date-side">SENTYABR</span>
@@ -517,16 +518,16 @@
               <span class="date-side">2026</span>
             </div>
 
-            <p class="waiting-text">Sizi gözləyirik!</p>
-            <div class="decorative-heart">❦</div>
+            <p class="waiting-text animated-element" style="animation-delay: 1.6s;">Sizi gözləyirik!</p>
+            <div class="decorative-heart animated-element" style="animation-delay: 1.8s;">❦</div>
 
-            <div class="info-footer">
+            <div class="info-footer animated-element" style="animation-delay: 2s;">
               <p class="time-location">S A A T &nbsp;|&nbsp; M Ə K A N</p>
             </div>
           </div>
         </div>
 
-        <button class="rsvp-button" type="button" onclick="scrollToRSVP()">
+        <button class="rsvp-button animated-element" style="animation-delay: 2.2s;" type="button" onclick="scrollToRSVP()">
           <span class="glow-text">Aşağı sürüşdürün</span>
           <span class="arrow">↓</span>
         </button>
@@ -535,19 +536,19 @@
       <!-- SLIDE 2: RSVP SECTION -->
       <section class="snap-section" id="rsvp-section">
         <div class="rsvp-card" id="parallax-rsvp-card">
-          <p class="rsvp-title-sub">R S V P</p>
-          <h2 class="rsvp-title">Sizi gözləyirik</h2>
-          <p class="rsvp-desc">
+          <p class="rsvp-title-sub animated-element" style="animation-delay: 0.2s;">R S V P</p>
+          <h2 class="rsvp-title animated-element" style="animation-delay: 0.4s;">Sizi gözləyirik</h2>
+          <p class="rsvp-desc animated-element" style="animation-delay: 0.6s;">
             Həyatımızın ən gözəl başlanğıcında sevincimizi sizinlə bölüşmək bizim üçün ən böyük dəyərdir.
           </p>
 
           <form class="rsvp-form" onsubmit="sendToWhatsApp(event)">
-            <div class="form-group">
+            <div class="form-group animated-element" style="animation-delay: 0.8s;">
               <label for="guest-name">AD VƏ SOYADINIZ</label>
               <input type="text" id="guest-name" class="form-input" placeholder="Məs: Əli Əliyev" required>
             </div>
 
-            <div class="form-group">
+            <div class="form-group animated-element" style="animation-delay: 1s;">
               <label>İŞTİRAK EDƏCƏKSİNİZ?</label>
               <div class="attendance-options">
                 <button type="button" class="attendance-btn active" onclick="selectAttendance(this, 'Gələcəyəm')">GƏLƏCƏYƏM</button>
@@ -556,7 +557,7 @@
               <input type="hidden" id="attendance-status" value="Gələcəyəm">
             </div>
 
-            <div class="form-group" id="guest-count-group">
+            <div class="form-group animated-element" style="animation-delay: 1.2s;" id="guest-count-group">
               <label for="guest-count">QONAQ SAYI</label>
               <select id="guest-count" class="form-select">
                 <option value="1 nəfər">1 Nəfər</option>
@@ -566,7 +567,7 @@
               </select>
             </div>
 
-            <button type="submit" class="submit-btn">
+            <button type="submit" class="submit-btn animated-element" style="animation-delay: 1.4s;">
               WHATSAPP İLƏ TƏSDİQLƏ
             </button>
           </form>
@@ -583,9 +584,8 @@
     const mainInvitation = document.getElementById("main-invitation");
     const rsvpCard = document.getElementById('parallax-rsvp-card');
 
-    // İLK TOXUNUŞDA TAM EKRAN REJİMİNƏ KEÇİD VƏ VİDEONU BAŞLATMA
     invitation.addEventListener("click", function() {
-      requestFullScreenMode(); // Səhifəni avtomatik Fullscreen edir
+      requestFullScreenMode();
       openVideo();
     });
 
@@ -593,11 +593,11 @@
       const docEl = document.documentElement;
       if (docEl.requestFullscreen) {
         docEl.requestFullscreen().catch(err => console.log("Fullscreen xətası:", err));
-      } else if (docEl.webkitRequestFullscreen) { /* Safari / iOS */
+      } else if (docEl.webkitRequestFullscreen) {
         docEl.webkitRequestFullscreen();
-      } else if (docEl.msRequestFullscreen) { /* IE / Edge */
+      } else if (docEl.msRequestFullscreen) {
         docEl.msRequestFullscreen();
-      } else if (docEl.mozRequestFullScreen) { /* Firefox */
+      } else if (docEl.mozRequestFullScreen) {
         docEl.mozRequestFullScreen();
       }
     }
@@ -613,13 +613,20 @@
       });
     }
 
+    // YERİNDƏ YUMŞAQ AÇILAN (FADE IN) ANİMASİYA FUNKSİYASI
+    function triggerAnimations(container) {
+      const elements = container.querySelectorAll('.animated-element');
+      elements.forEach(el => {
+        el.classList.add('animate__animated', 'animate__fadeIn');
+        el.style.opacity = '1';
+      });
+    }
+
     openingVideo.addEventListener("ended", function() {
       mainInvitation.style.display = "block";
       
-      const nameElements = document.querySelectorAll(".name");
-      nameElements.forEach(nameEl => {
-        nameEl.classList.add("animate__animated", "animate__backInDown");
-      });
+      const heroSection = document.querySelector('.hero-section');
+      triggerAnimations(heroSection);
 
       setTimeout(() => {
         mainInvitation.classList.add("fade-in");
@@ -633,7 +640,16 @@
       }, 1000);
     });
 
-    // SÜRTÜNÜB SLIDE KEÇİDİ
+    const sliderContainer = document.getElementById("slider-container");
+    sliderContainer.addEventListener("scroll", function() {
+      const rsvpSection = document.getElementById("rsvp-section");
+      const rect = rsvpSection.getBoundingClientRect();
+      
+      if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+        triggerAnimations(rsvpSection);
+      }
+    });
+
     function scrollToRSVP() {
       document.getElementById("rsvp-section").scrollIntoView({
         behavior: "smooth"
@@ -646,7 +662,6 @@
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
 
-    // Maus ilə 4 istiqamətli fırlanma (Sağ, Sol, Yuxarı, Aşağı)
     rsvpCard.addEventListener('mousemove', (e) => {
       const rect = rsvpCard.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -655,8 +670,8 @@
       const percentX = (e.clientX - centerX) / (rect.width / 2);
       const percentY = (e.clientY - centerY) / (rect.height / 2);
 
-      targetY = percentX * 15;  // Sağ - Sol
-      targetX = -percentY * 15; // Yuxarı - Aşağı
+      targetY = percentX * 15; 
+      targetX = -percentY * 15; 
     });
 
     rsvpCard.addEventListener('mouseleave', () => {
@@ -694,7 +709,7 @@
 
     function sendToWhatsApp(event) {
       event.preventDefault();
-      const phoneNumber = "994500000000"; // Öz WhatsApp nömrənizi qeyd edin
+      const phoneNumber = "994500000000";
 
       const name = document.getElementById('guest-name').value.trim();
       const status = document.getElementById('attendance-status').value;
