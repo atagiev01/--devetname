@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https://(www\.)?sizin-saytiniz\.com/ [NC]
+RewriteRule \.(png|jpg|jpeg|gif|mov|mp4)$ - [F,NC,L]

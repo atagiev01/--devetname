@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Dəvətnamə</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Corinthia:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        margin: 0;
+        padding: 0;
+      }
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        background: #f5f0e9;
+        font-family: Georgia, "Times New Roman", serif;
+        overflow: hidden;
+        perspective: 1000px;
+      }
+      .invitation-card {
+        width: 100%;
+        height: 100dvh;
+        margin: 0 auto;
+        background: #fff;
+        position: relative;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        transform-style: preserve-3d;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .invitation-card::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+      .snap-section {
+        width: 100%;
+        height: 100dvh;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        position: relative;
+        overflow: hidden;
+      }
+      .animated-element {
+        opacity: 0;
+      }
+      #opening-screen {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100dvh;
+        background: #f5f0e9;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity 1s ease,
+          visibility 1s ease;
+      }
+      #opening-screen.fade-out {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #invitation {
+        width: 100%;
+        max-width: 430px;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        user-select: none;
+      }
+      #opening-video {
+        display: none;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #main-invitation {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      #main-invitation.fade-in {
+        display: block;
+        opacity: 1;
+      }
+      .hero-section {
+        position: relative;
+        width: 100%;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .hero-background {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .hero-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 178, 0, 0.2);
+      }
+      .hero-content.image-style-theme {
+        position: relative;
+        z-index: 10;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 25px 15px 15px;
+        text-align: center;
+        color: #6d4c1b;
+      }
+      .outer-gold-border {
+        position: absolute;
+        inset: 10px;
+        border: 1px solid rgba(181, 142, 80, 0.45);
+        pointer-events: none;
+        z-index: 1;
+      }
+      .hero-top {
+        position: relative;
+        z-index: 2;
+        margin-top: 5px;
+      }
+      .getting-married {
+        font-family: Cinzel, serif;
+        font-size: 14px;
+        letter-spacing: 0.35em;
+        color: #5c3e10;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .top-ornament {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .ornament-line {
+        width: 25px;
+        height: 1px;
+        background: rgba(181, 142, 80, 0.5);
+      }
+      .ornament-icon {
+        font-size: 8px;
+        color: #a37c3f;
+      }
+      .names {
+        font-weight: 400;
+        line-height: 1;
+        margin: 0;
+      }
+      .name {
+        display: block;
+        font-family: "Alex Brush", cursive;
+        font-size: clamp(100px, 12vw, 65px);
+        color: #7a551e;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+      }
+      .ampersand {
+        display: block;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-style: italic;
+        color: #8c6a32;
+        margin: -8px 0;
+      }
+      .quote-box {
+        margin: 6px auto 0;
+        padding: 6px 10px;
+        width: fit-content;
+        border: 1px solid rgba(196, 194, 192, 0.35);
+        background: rgb(255 249 217 / 35%);
+        backdrop-filter: blur(3px);
+      }
+      .hero-bottom {
+        position: relative;
+        z-index: 2;
+        margin-bottom: 5px;
+      }
+      .date-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 4px;
+      }
+      .date-side {
+        font-family: Cinzel, serif;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        color: #4a320c;
+        font-weight: 600;
+      }
+      .date-divider {
+        width: 1px;
+        height: 18px;
+        background: rgba(181, 142, 80, 0.5);
+      }
+      .waiting-text {
+        font-family: "Alex Brush", cursive;
+        font-size: 26px;
+        color: #5c3e10;
+        margin-top: 0;
+      }
+      .decorative-heart {
+        font-size: 11px;
+        color: #a37c3f;
+        margin: -4px 0 4px;
+      }
+      .info-footer {
+        font-family: Cinzel, serif;
+        color: #4a320c;
+      }
+      .time-location {
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        font-weight: 600;
+      }
+      @keyframes glow {
+        from {
+          opacity: 0.4;
+          text-shadow:
+            0 0 2px #fff,
+            0 0 5px #ffb300;
+        }
+        to {
+          opacity: 1;
+          text-shadow:
+            0 0 8px #fff,
+            0 0 15px #ffb300,
+            0 0 25px #ff8f00;
+        }
+      }
+      .glow-text {
+        font-size: 13px;
+        color: #fff;
+        text-align: center;
+        animation: glow 1.8s ease-in-out infinite alternate;
+      }
+      .rsvp-button {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        border: 0;
+        background: 0 0;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding-bottom: clamp(15px, 4vh, 25px);
+        cursor: pointer;
+      }
+      .arrow {
+        font-size: 18px;
+        animation: arrowMove 1.5s infinite ease-in-out;
+      }
+      @keyframes arrowMove {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(5px);
+        }
+      }
+      #rsvp-section {
+        background: #faf7f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .rsvp-card {
+        width: 100%;
+        max-width: 380px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        border: 2px solid #d4af37;
+        border-radius: 24px;
+        padding: 28px 20px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(74, 56, 34, 0.14);
+        transform-style: preserve-3d;
+        will-change: transform;
+      }
+      .rsvp-title-sub {
+        font-family: Cinzel, serif;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        color: #a37c3f;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .rsvp-title {
+        font-family: "Alex Brush", cursive;
+        font-size: clamp(34px, 8vw, 44px);
+        color: #5c3e10;
+        margin: 0 0 8px;
+      }
+      .rsvp-desc {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 15px;
+        line-height: 1.4;
+        color: #665235;
+        margin: 0 auto 20px;
+      }
+      .rsvp-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .form-group label {
+        font-family: Cinzel, serif;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        color: #5c3e10;
+        font-weight: 600;
+      }
+      .form-input,
+      .form-select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid rgba(181, 142, 80, 0.4);
+        background: #fff;
+        border-radius: 6px;
+        font-size: 13px;
+        color: #4a320c;
+        outline: 0;
+      }
+      .attendance-options {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+      }
+      .attendance-btn {
+        flex: 1;
+        padding: 10px 6px;
+        border: 1px solid rgba(181, 142, 80, 0.4);
+        background: #fff;
+        border-radius: 6px;
+        font-family: Cinzel, serif;
+        font-size: 10px;
+        color: #5c3e10;
+        cursor: pointer;
+      }
+      .attendance-btn.active {
+        background: #cba358;
+        color: #fff;
+        border-color: #cba358;
+      }
+      .submit-btn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border: none;
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        color: #fff;
+        font-family: Cinzel, serif;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+      }
+      @media (min-width: 601px) {
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+        }
+        .invitation-card {
+          max-width: 430px;
+          height: 100vh;
+          max-height: 930px;
+          border-radius: 16px;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        #opening-screen {
+          position: absolute;
+          border-radius: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="invitation-card" id="slider-container">
+      <div id="opening-screen">
+        <img
+          id="invitation"
+          src="/acilmamis_devetname.png"
+          alt="Dəvətnaməni aç"
+          draggable="false"
+        /><video
+          id="opening-video"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          muted
+          disablepictureinpicture
+          controlslist="nodownload nofullscreen noremoteplayback"
+        >
+          <source src="/presentational-3%20kopyası.mov" type="video/mp4" />
+        </video>
+      </div>
+      <main id="main-invitation">
+        <section class="snap-section hero-section">
+          <div class="hero-background">
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              webkit-playsinline
+              preload="auto"
+              src="/hero-video-BkP1eoiB.mp4"
+            ></video>
+            <div class="hero-overlay"></div>
+          </div>
+          <div class="hero-content image-style-theme">
+            <div class="outer-gold-border"></div>
+            <div class="hero-top">
+              <p
+                class="getting-married animated-element"
+                style="animation-delay: 0.2s"
+              >
+                TOYUMUZA DƏVƏTLİSİNİZ
+              </p>
+              <div
+                class="top-ornament animated-element"
+                style="animation-delay: 0.4s"
+              >
+                <span class="ornament-line"></span
+                ><span class="ornament-icon">🕃 ✦ 🕄</span
+                ><span class="ornament-line"></span>
+              </div>
+              <h1 class="names">
+                <span
+                  class="name animated-element"
+                  style="animation-delay: 0.6s"
+                  >Asim</span
+                ><span
+                  class="ampersand animated-element"
+                  style="animation-delay: 0.8s"
+                  >&amp;</span
+                ><span class="name animated-element" style="animation-delay: 1s"
+                  >Sevinc</span
+                >
+              </h1>
+            </div>
+            <div
+              class="hero-bottom quote-box animated-element"
+              style="animation-delay: 1.2s"
+            >
+              <div
+                class="date-container animated-element"
+                style="animation-delay: 1.4s"
+              >
+                <span class="date-side">12</span
+                ><span class="date-divider"></span
+                ><span class="date-side">SENTYABR</span
+                ><span class="date-divider"></span
+                ><span class="date-side">2026</span>
+              </div>
+              <p
+                class="waiting-text animated-element"
+                style="animation-delay: 1.6s"
+              >
+                Sizi gözləyirik!
+              </p>
+              <div
+                class="decorative-heart animated-element"
+                style="animation-delay: 1.8s"
+              >
+                ❦
+              </div>
+              <div
+                class="info-footer animated-element"
+                style="animation-delay: 2s"
+              >
+                <p class="time-location">S A A T &nbsp;|&nbsp; M Ə K A N</p>
+              </div>
+            </div>
+          </div>
+          <button
+            class="rsvp-button animated-element"
+            style="animation-delay: 2.2s"
+            type="button"
+            onclick="scrollToRSVP()"
+          >
+            <span class="glow-text">Aşağı sürüşdürün</span
+            ><span class="arrow">↓</span>
+          </button>
+        </section>
+        <section class="snap-section" id="rsvp-section">
+          <div class="rsvp-card" id="parallax-rsvp-card">
+            <p
+              class="rsvp-title-sub animated-element"
+              style="animation-delay: 0.2s"
+            >
+              R S V P
+            </p>
+            <h2
+              class="rsvp-title animated-element"
+              style="animation-delay: 0.4s"
+            >
+              Sizi gözləyirik
+            </h2>
+            <p class="rsvp-desc animated-element" style="animation-delay: 0.6s">
+              Həyatımızın ən gözəl başlanğıcında sevincimizi sizinlə bölüşmək
+              bizim üçün ən böyük dəyərdir.
+            </p>
+            <form class="rsvp-form" onsubmit="sendToWhatsApp(event)">
+              <div
+                class="form-group animated-element"
+                style="animation-delay: 0.8s"
+              >
+                <label for="guest-name">AD VƏ SOYADINIZ</label
+                ><input
+                  type="text"
+                  id="guest-name"
+                  class="form-input"
+                  placeholder="Məs: Əli Əliyev"
+                  required
+                />
+              </div>
+              <div
+                class="form-group animated-element"
+                style="animation-delay: 1s"
+              >
+                <label>İŞTİRAK EDƏCƏKSİNİZ?</label>
+                <div class="attendance-options">
+                  <button
+                    type="button"
+                    class="attendance-btn active"
+                    onclick="selectAttendance(this, 'Gələcəyəm')"
+                  >
+                    GƏLƏCƏYƏM</button
+                  ><button
+                    type="button"
+                    class="attendance-btn"
+                    onclick="selectAttendance(this, 'Gələ bilməyəcəyəm')"
+                  >
+                    GƏLƏ BİLMƏYƏCƏYƏM
+                  </button>
+                </div>
+                <input type="hidden" id="attendance-status" value="Gələcəyəm" />
+              </div>
+              <div
+                class="form-group animated-element"
+                style="animation-delay: 1.2s"
+                id="guest-count-group"
+              >
+                <label for="guest-count">QONAQ SAYI</label
+                ><select id="guest-count" class="form-select">
+                  <option value="1 nəfər">1 Nəfər</option>
+                  <option value="2 nəfər">2 Nəfər</option>
+                  <option value="3 nəfər">3 Nəfər</option>
+                  <option value="4+ nəfər">4 və daha çox</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                class="submit-btn animated-element"
+                style="animation-delay: 1.4s"
+              >
+                WHATSAPP İLƏ TƏSDİQLƏ
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      const invitation = document.getElementById("invitation");
+      const openingScreen = document.getElementById("opening-screen");
+      const openingVideo = document.getElementById("opening-video");
+      const mainInvitation = document.getElementById("main-invitation");
+      const rsvpCard = document.getElementById("parallax-rsvp-card");
+
+      invitation.addEventListener("click", function () {
+        requestFullScreenMode();
+        openVideo();
+      });
+
+      function requestFullScreenMode() {
+        const docEl = document.documentElement;
+        if (docEl.requestFullscreen) {
+          docEl
+            .requestFullscreen()
+            .catch((err) => console.log("Fullscreen xətası:", err));
+        } else if (docEl.webkitRequestFullscreen) {
+          docEl.webkitRequestFullscreen();
+        } else if (docEl.msRequestFullscreen) {
+          docEl.msRequestFullscreen();
+        } else if (docEl.mozRequestFullScreen) {
+          docEl.mozRequestFullScreen();
+        }
+      }
+
+      function openVideo() {
+        invitation.style.display = "none";
+        openingVideo.style.display = "block";
+        openingVideo.currentTime = 0;
+        openingVideo.playbackRate = 2;
+
+        openingVideo.play().catch(function (error) {
+          console.log("Video autoplay problemi:", error);
+        });
+      }
+
+      // YERİNDƏ YUMŞAQ AÇILAN (FADE IN) ANİMASİYA FUNKSİYASI
+      function triggerAnimations(container) {
+        const elements = container.querySelectorAll(".animated-element");
+        elements.forEach((el) => {
+          el.classList.add("animate__animated", "animate__fadeIn");
+          el.style.opacity = "1";
+        });
+      }
+
+      openingVideo.addEventListener("ended", function () {
+        mainInvitation.style.display = "block";
+
+        const heroSection = document.querySelector(".hero-section");
+        triggerAnimations(heroSection);
+
+        setTimeout(() => {
+          mainInvitation.classList.add("fade-in");
+        }, 20);
+
+        openingScreen.classList.add("fade-out");
+
+        setTimeout(() => {
+          openingVideo.pause();
+          openingScreen.style.display = "none";
+        }, 1000);
+      });
+
+      const sliderContainer = document.getElementById("slider-container");
+      sliderContainer.addEventListener("scroll", function () {
+        const rsvpSection = document.getElementById("rsvp-section");
+        const rect = rsvpSection.getBoundingClientRect();
+
+        if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+          triggerAnimations(rsvpSection);
+        }
+      });
+
+      function scrollToRSVP() {
+        document.getElementById("rsvp-section").scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      /* =======================================================
+       4 İSTİQAMƏTLİ PARALLAX TILT (MAUS + GIROSKOP)
+    ======================================================= */
+      let targetX = 0,
+        targetY = 0;
+      let currentX = 0,
+        currentY = 0;
+
+      rsvpCard.addEventListener("mousemove", (e) => {
+        const rect = rsvpCard.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const percentX = (e.clientX - centerX) / (rect.width / 2);
+        const percentY = (e.clientY - centerY) / (rect.height / 2);
+
+        targetY = percentX * 15;
+        targetX = -percentY * 15;
+      });
+
+      rsvpCard.addEventListener("mouseleave", () => {
+        targetX = 0;
+        targetY = 0;
+      });
+
+      function animateParallax() {
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
+
+        if (rsvpCard) {
+          rsvpCard.style.transform = `rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg)`;
+        }
+
+        requestAnimationFrame(animateParallax);
+      }
+      animateParallax();
+
+      /* =======================================================
+       RSVP WHATSAPP İNTEQRASİYASI
+    ======================================================= */
+      function selectAttendance(btn, status) {
+        document
+          .querySelectorAll(".attendance-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("attendance-status").value = status;
+
+        const countGroup = document.getElementById("guest-count-group");
+        if (status === "Gələ bilməyəcəyəm") {
+          countGroup.style.display = "none";
+        } else {
+          countGroup.style.display = "flex";
+        }
+      }
+
+      function sendToWhatsApp(event) {
+        event.preventDefault();
+        const phoneNumber = "994500000000";
+
+        const name = document.getElementById("guest-name").value.trim();
+        const status = document.getElementById("attendance-status").value;
+        const count = document.getElementById("guest-count").value;
+
+        let text = `Salam! Toy dəvətnaməsi üçün RSVP cavabı:\n\n`;
+        text += `👤 *Ad Soyad:* ${name}\n`;
+        text += `📌 *İştirak:* ${status}\n`;
+
+        if (status === "Gələcəyəm") {
+          text += `👥 *Qonaq Sayı:* ${count}\n`;
+        }
+
+        const encodedText = encodeURIComponent(text);
+        window.open(
+          `https://wa.me/${phoneNumber}?text=${encodedText}`,
+          "_blank",
+        );
+      }
+      // DevTools açıldıqda sonsuz debugger işə düşür və inspeksiyanı çətinləşdirir
+setInterval(function () {
+  const startTime = performance.now();
+  debugger;
+  const endTime = performance.now();
+  if (endTime - startTime > 100) {
+    document.body.innerHTML = "Təhlükəsizlik qaydalarını pozduğunuz üçün giriş bloklandı!";
+  }
+}, 1000);
+    </script>
+  </body>
+</html>
