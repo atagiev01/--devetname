@@ -19,157 +19,37 @@
   rel="stylesheet"
 >
 <style>/* =========================================
-   SCROLL DIRECTION ANIMATIONS
-========================================= */
-
-.scroll-element {
-  opacity: 0;
-  will-change: transform, opacity, filter;
-}
-
-
-/* ===============================
-   AŞAĞI SCROLL
-   Elementlər aşağıdan gəlir
-================================ */
-
-.scroll-down {
-  animation: scrollDownAnimation .9s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-@keyframes scrollDownAnimation {
-
-  0% {
-    opacity: 0;
-    transform:
-      translateY(80px)
-      scale(.88)
-      rotateX(12deg);
-    filter: blur(8px);
-  }
-
-  60% {
-    opacity: 1;
-    transform:
-      translateY(-5px)
-      scale(1.02)
-      rotateX(0);
-    filter: blur(0);
-  }
-
-  100% {
-    opacity: 1;
-    transform:
-      translateY(0)
-      scale(1)
-      rotateX(0);
-    filter: blur(0);
-  }
-
-}
-
-
-/* ===============================
-   YUXARI SCROLL
-   Tam başqa animasiya
-================================ */
-
-.scroll-up {
-  animation: scrollUpAnimation .9s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-@keyframes scrollUpAnimation {
-
-  0% {
-    opacity: 0;
-    transform:
-      translateY(-70px)
-      scale(.92)
-      rotateX(-10deg);
-    filter: blur(7px);
-  }
-
-  60% {
-    opacity: 1;
-    transform:
-      translateY(5px)
-      scale(1.03);
-    filter: blur(0);
-  }
-
-  100% {
-    opacity: 1;
-    transform:
-      translateY(0)
-      scale(1);
-  }
-
-}
-
-
-/* =========================================
-   FƏRQLİ ELEMENTLƏRƏ FƏRQLİ EFFEKT
-========================================= */
-
-.scroll-down:nth-child(2) {
-  animation-delay: .08s;
-}
-
-.scroll-down:nth-child(3) {
-  animation-delay: .16s;
-}
-
-.scroll-down:nth-child(4) {
-  animation-delay: .24s;
-}
-
-
-/* =========================================
-   YUXARI SCROLL ÜÇÜN FƏRQLİ HƏRƏKƏTLƏR
-========================================= */
-
-.scroll-up:nth-child(2) {
-  animation-delay: .08s;
-}
-
-.scroll-up:nth-child(3) {
-  animation-delay: .16s;
-}
-
-.scroll-up:nth-child(4) {
-  animation-delay: .24s;
-}
-
-
-
-
-/* =========================================
-   SCROLL IMAGE / CONTENT REVEAL
+   SCROLL REVEAL (CSS scroll-driven animation)
 ========================================= */
 
 .image-reveal {
-  animation: imageReveal  both;
+  animation: imageReveal both;
   animation-timeline: view();
+}
+.image-reveal-0 {
+  animation: imageReveal both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 30%;
 }
 
 @keyframes imageReveal {
 
   from {
-filter:saturate(0)contrast (4) brightness(.1) blur (5px);
+    filter: saturate(0) contrast(4) brightness(.1) blur(5px);
     opacity: 0;
     scale: .95;
-    translate:0 4rem ;
-}
+    translate: 0 4rem;
+  }
 
   to {
     filter: none;
     opacity: 1;
     scale: 1;
-    translate:0 0;
-
+    translate: 0 0;
   }
 
 }
+
 .scroll-reveal {
   animation: premiumReveal linear both;
   animation-timeline: view();
@@ -1653,38 +1533,129 @@ a{
 
   z-index:500;
 
-  width:48px;
-  height:48px;
+  width:52px;
+  height:52px;
 
   border-radius:50%;
 
-  background:#fff;
+  background:
+    linear-gradient(
+      145deg,
+      #fffdf8,
+      #f8f0df
+    );
 
   border:
     1px solid
-    #f4d9de;
+    rgba(181,142,80,.55);
 
-  color:var(--rose);
+  color:#a3782f;
 
   display:flex;
 
   align-items:center;
   justify-content:center;
 
-  box-shadow:var(--shadow);
+  box-shadow:
+    0 10px 28px rgba(120,88,30,.18),
+    inset 0 0 0 1px rgba(255,255,255,.6);
 
-  transition:.3s ease;
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease;
 }
 
 #music-toggle:hover{
 
-  transform:scale(1.06);
+  transform:scale(1.07);
+
+  box-shadow:
+    0 14px 34px rgba(120,88,30,.24),
+    inset 0 0 0 1px rgba(255,255,255,.6);
 }
 
-#music-toggle svg{
+#music-toggle:active{
 
-  width:20px;
-  height:20px;
+  transform:scale(.94);
+}
+
+#music-toggle .note-icon{
+
+  position:absolute;
+
+
+  transition:
+    opacity .35s ease,
+    transform .35s ease;
+}
+
+#music-toggle .note-icon.is-hidden{
+
+  opacity:0;
+
+  transform:scale(.6) rotate(-25deg);
+
+  pointer-events:none;
+}
+
+/* animated equalizer bars shown only while music is actually playing */
+
+.eq-bars{
+
+  display:flex;
+
+  align-items:flex-end;
+
+  gap:2.5px;
+
+  height:14px;
+}
+
+.eq-bars i{
+
+  display:block;
+
+  width:3px;
+
+  background:#a3782f;
+
+  border-radius:2px;
+
+  animation:
+    eqBounce
+    .9s
+    ease-in-out
+    infinite;
+}
+
+.eq-bars i:nth-child(1){
+  animation-delay:0s;
+}
+
+.eq-bars i:nth-child(2){
+  animation-delay:.18s;
+}
+
+.eq-bars i:nth-child(3){
+  animation-delay:.36s;
+}
+
+#music-toggle:not(.is-playing) .eq-bars i{
+
+  animation-play-state:paused;
+
+  height:4px !important;
+}
+
+@keyframes eqBounce{
+
+  0%,100%{
+    height:4px;
+  }
+
+  50%{
+    height:14px;
+  }
 }
 
 
@@ -2228,7 +2199,7 @@ a{
   <div class="luxury-orb orb-2"></div>
 
 
-  <div class="ceremony-inner image-reveal">
+  <div class="ceremony-inner image-">
 
 
     <div class="ceremony-title">
@@ -2606,7 +2577,7 @@ a{
      FOOTER
 ======================================================= -->
 
-<footer class="footer">
+<footer class="footer image-reveal-0">
 
   <p class="footer-script">
     Görüşənədək
@@ -2626,52 +2597,47 @@ a{
 <button
   id="music-toggle"
   aria-label="Musiqini aç və bağla"
-  aria-pressed="true"
+  aria-pressed="false"
 >
+
+  <!-- SƏSSİZ vəziyyət: not işarəsi üstündə xətt -->
 
   <svg
     id="icon-muted"
+    class="note-icon"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
   >
 
-    <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
+    <path d="M9 17V5.5L20 3v11.5" />
 
-    <line
-      x1="16"
-      y1="9"
-      x2="21"
-      y2="15"
-    />
+    <circle cx="6.5" cy="17" r="2.5" />
 
-    <line
-      x1="21"
-      y1="9"
-      x2="16"
-      y2="15"
-    />
+    <circle cx="17.5" cy="14.5" r="2.5" />
+
+    <line x1="3" y1="3" x2="21" y2="21" stroke="#b5563f" />
 
   </svg>
 
 
-  <svg
+  <!-- İFA OLUNUR vəziyyəti: not + canlı equalizer -->
+
+  <span
     id="icon-playing"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.6"
-    hidden
+    class="note-icon is-hidden"
   >
 
-    <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
+    <span class="eq-bars">
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
 
-    <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
-
-    <path d="M18 6a8.5 8.5 0 0 1 0 12"/>
-
-  </svg>
+  </span>
 
 </button>
 
@@ -2679,10 +2645,7 @@ a{
 <audio
   id="bg-music"
   loop
-  aria-pressed="true"
-
   preload="none"
-  
 >
 
   <source
@@ -2739,35 +2702,35 @@ function openVideo(){
 
   openingStarted = true;
 
-
-  invitation.style.display =
-    "none";
-
-  openingVideo.style.display =
-    "block";
-
+  invitation.style.display = "none";
+  openingVideo.style.display = "block";
 
   openingVideo.currentTime = 0;
-
   openingVideo.playbackRate = 2;
 
+  // 🎵 Musiqini avtomatik başlat
+  const music = document.getElementById("bg-music");
 
-  const playPromise =
-    openingVideo.play();
+  music.volume = 0.7;
 
+  music.play()
+    .then(setMusicPlayingState)
+    .catch(() => {
+      console.log("Musiqi avtomatik başlaya bilmədi.");
+      setMusicPausedState();
+    });
+
+  const playPromise = openingVideo.play();
 
   if(playPromise){
 
     playPromise.catch(()=>{
-      console.log(
-        "Video avtomatik başlaya bilmədi."
-      );
+      console.log("Video avtomatik başlaya bilmədi.");
     });
 
   }
 
 }
-
 
 /* VIDEO BITDI */
 
@@ -2993,7 +2956,8 @@ document
 
 
 /* =========================================================
-   MUSIC
+   MUSIC TOGGLE
+   ( ikon həmişə musiqinin REAL vəziyyətini göstərir )
 ========================================================= */
 
 const musicButton =
@@ -3017,7 +2981,43 @@ const iconPlaying =
   );
 
 
-let isPlaying = false;
+function setMusicPlayingState(){
+
+  musicButton.classList.add("is-playing");
+
+  iconMuted.classList.add("is-hidden");
+  iconPlaying.classList.remove("is-hidden");
+
+  musicButton.setAttribute("aria-pressed","true");
+
+  musicButton.setAttribute(
+    "aria-label",
+    "Musiqini dayandır"
+  );
+
+}
+
+
+function setMusicPausedState(){
+
+  musicButton.classList.remove("is-playing");
+
+  iconMuted.classList.remove("is-hidden");
+  iconPlaying.classList.add("is-hidden");
+
+  musicButton.setAttribute("aria-pressed","false");
+
+  musicButton.setAttribute(
+    "aria-label",
+    "Musiqini başlat"
+  );
+
+}
+
+
+/* Başlanğıcda musiqi hələ çalmır, ona görə ikon SƏSSİZ göstərilir */
+
+setMusicPausedState();
 
 
 musicButton.addEventListener(
@@ -3026,32 +3026,19 @@ musicButton.addEventListener(
 
     try{
 
-      if(!isPlaying){
+      if(audio.paused){
 
         await audio.play();
 
+        setMusicPlayingState();
 
       }else{
 
         audio.pause();
 
-        isPlaying = false;
+        setMusicPausedState();
 
       }
-
-
-      iconMuted.hidden =
-        isPlaying;
-
-      iconPlaying.hidden =
-        !isPlaying;
-
-
-      musicButton.setAttribute(
-        "aria-pressed",
-        String(isPlaying)
-      );
-
 
     }catch(error){
 
@@ -3059,6 +3046,8 @@ musicButton.addEventListener(
         "Musiqi oxudulmadı:",
         error
       );
+
+      setMusicPausedState();
 
     }
 
@@ -3131,136 +3120,6 @@ window.addEventListener("scroll", () => {
 }, { passive: true });
 
 updateParallax();
-</script>
-
-<script>
-    /* =========================================
-   SCROLL DIRECTION ENGINE
-========================================= */
-
-let lastScrollY = window.scrollY;
-let scrollDirection = "down";
-
-const scrollElements =
-  document.querySelectorAll(
-    ".reveal, .luxury-card, .program-item, .rsvp-card, .hero-actions"
-  );
-
-
-const scrollObserver = new IntersectionObserver(
-  (entries) => {
-
-    entries.forEach((entry) => {
-
-      if (!entry.isIntersecting) return;
-
-      const element = entry.target;
-
-      /* Köhnə animasiyanı sil */
-      element.classList.remove(
-        "scroll-down",
-        "scroll-up"
-      );
-
-      /* Browser-in animasiyanı yenidən başlatması üçün */
-      void element.offsetWidth;
-
-      /* İstiqamətə görə yeni animasiya */
-      if (scrollDirection === "down") {
-
-        element.classList.add("scroll-down");
-
-      } else {
-
-        element.classList.add("scroll-up");
-
-      }
-
-    });
-
-  },
-  {
-    threshold: .15
-  }
-);
-
-
-scrollElements.forEach((element) => {
-
-  element.classList.add("scroll-element");
-
-  scrollObserver.observe(element);
-
-});
-
-
-/* =========================================
-   SCROLL İSTİQAMƏTİNİ TUT
-========================================= */
-
-window.addEventListener(
-  "scroll",
-  () => {
-
-    const currentScrollY =
-      window.scrollY;
-
-
-    if (currentScrollY > lastScrollY) {
-
-      scrollDirection = "down";
-
-    } else if (currentScrollY < lastScrollY) {
-
-      scrollDirection = "up";
-
-    }
-
-
-    lastScrollY = currentScrollY;
-
-  },
-  {
-    passive: true
-  }
-);
-
- const hero = document.querySelector(".premium-hero");
-
-let previousScroll = window.scrollY;
-
-window.addEventListener("scroll", () => {
-
-  const current = window.scrollY;
-  const delta = current - previousScroll;
-
-  previousScroll = current;
-
-  if (!hero) return;
-
-
-  /* AŞAĞI */
-  if (delta > 0) {
-
-    hero.style.transform =
-      `translateY(${current * 0.12}px)
-       rotateX(${Math.min(current * 0.015, 5)}deg)
-       scale(${Math.max(1 - current * 0.00015, .94)})`;
-
-  }
-
-
-  /* YUXARI */
-  else if (delta < 0) {
-
-    hero.style.transform =
-      `translateY(${current * 0.05}px)
-       rotateX(${Math.max(current * -0.01, -4)}deg)
-       scale(${Math.min(1 + Math.abs(delta) * .002, 1.04)})`;
-
-  }
-
-});
 </script>
 
 </body>
