@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Şriftlər: index.html-də yüklənir. Azərbaycan hərfləri (ə, ı, ş...) üçün Noto ehtiyat şriftləri var. */
+@theme {
+  --font-serif: "Playfair Display", "Noto Serif", Georgia, serif;
+  --font-sans: "Inter", "Noto Sans", system-ui, sans-serif;
+}
+
+/* Hides scrollbars on horizontally-scrollable chip rows (category filters)
+   while keeping the element scrollable — used on the public catalog page. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
