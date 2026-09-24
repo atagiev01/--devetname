@@ -178,7 +178,7 @@ export function getAntiTheftIframeScript(): string {
   } catch(e) {}
 
   // 5. Detect DevTools Open (Only on Desktop)
-  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || ('ontouchend' in window || navigator.maxTouchPoints > 0);
   var checkCount = 0;
   var consecutiveHits = 0;
 
@@ -396,14 +396,16 @@ export function attachWindowAntiTheftGuards(): () => void {
     }
   };
 
-  // Check if device is mobile
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  // Mobil və ya toxunma ekranlı cihazları (iOS Safari, Chrome Mobile və s.) aşkarlayırıq
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+    (typeof window !== 'undefined' && ('ontouchend' in window || navigator.maxTouchPoints > 0));
 
   let checkCount = 0;
   let consecutiveHits = 0;
   let devtoolsInterval: ReturnType<typeof setInterval> | null = null;
 
-  // Run DevTools detection ONLY on Desktop devices
+  // YALNIZ masaüstü (Desktop) cihazlarda DevTools bloklaması çalışsın:
   if (!isMobile) {
     devtoolsInterval = setInterval(() => {
       const widthDiff = window.outerWidth - window.innerWidth;
@@ -421,14 +423,6 @@ export function attachWindowAntiTheftGuards(): () => void {
         consecutiveHits++;
         if (consecutiveHits >= 2) {
           showBlockOverlay();
-          if (checkCount++ % 5 === 0) {
-            try {
-              console.clear();
-              console.log('%c[TƏHLÜKƏSİZLİK]: Kodların mühafizəsi aktivdir.', 'color:#ef4444;font-weight:bold;font-size:14px;');
-            } catch {
-              /* no-op */
-            }
-          }
         }
       } else {
         consecutiveHits = 0;
