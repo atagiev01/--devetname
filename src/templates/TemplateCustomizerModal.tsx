@@ -32,6 +32,11 @@ export const TemplateCustomizerModal: React.FC<TemplateCustomizerModalProps> = (
   const [previewImage, setPreviewImage] = useState(template.previewImage);
   const [category, setCategory] = useState(template.category);
   const [active, setActive] = useState(template.active);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d6f4fdc (Initial commit)
   const [price, setPrice] = useState<string>(
     template.price !== undefined && template.price !== null ? String(template.price) : ''
   );
@@ -39,6 +44,10 @@ export const TemplateCustomizerModal: React.FC<TemplateCustomizerModalProps> = (
     template.oldPrice !== undefined && template.oldPrice !== null ? String(template.oldPrice) : ''
   );
   const [currency, setCurrency] = useState(template.currency || 'AZN');
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
   const [primaryColor, setPrimaryColor] = useState(template.themeConfig?.primaryColor || '#c89b3f');
   const [accentColor, setAccentColor] = useState(template.themeConfig?.accentColor || '#1c1917');
   const [customCss, setCustomCss] = useState(template.themeConfig?.customCss || '');
@@ -88,9 +97,18 @@ export const TemplateCustomizerModal: React.FC<TemplateCustomizerModalProps> = (
         previewImage,
         category,
         active,
+<<<<<<< HEAD
         price: price.trim() === '' ? undefined : Number(price),
         oldPrice: oldPrice.trim() === '' ? undefined : Number(oldPrice),
         currency: currency.trim() || 'AZN',
+=======
+<<<<<<< HEAD
+=======
+        price: price.trim() === '' ? undefined : Number(price),
+        oldPrice: oldPrice.trim() === '' ? undefined : Number(oldPrice),
+        currency: currency.trim() || 'AZN',
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
         updatedAt: new Date().toISOString(),
         music: musicEnabled ? music.trim() : '',
         musicTitle: musicEnabled ? musicTitle.trim() : '',
@@ -256,6 +274,11 @@ export const TemplateCustomizerModal: React.FC<TemplateCustomizerModalProps> = (
                 />
               </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d6f4fdc (Initial commit)
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block text-xs text-stone-400 mb-1">Qiymət</label>
@@ -298,6 +321,10 @@ export const TemplateCustomizerModal: React.FC<TemplateCustomizerModalProps> = (
                 Qiyməti boş buraxsanız, kataloqda "Qiymət sorğu ilə" göstəriləcək.
               </p>
 
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
               <div className="flex items-center gap-2 pt-2">
                 <input
                   type="checkbox"

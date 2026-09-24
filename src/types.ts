@@ -8,10 +8,19 @@ export interface Template {
   active: boolean;
   createdAt: string;
   updatedAt: string;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d6f4fdc (Initial commit)
   // Qiymətləndirmə: şablonun (məhsulun) satış qiyməti. Admin panelindən idarə olunur.
   price?: number; // Məs: 45 (manatla)
   currency?: string; // Məs: 'AZN', 'USD'. Boş buraxılarsa admin panelində 'AZN' göstərilir.
   oldPrice?: number; // Endirim göstərmək üçün əvvəlki (üstündən xətt çəkilmiş) qiymət
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
   // Şablon üçün standart fon musiqisi (bu şablonla yeni dəvətnamə yaradılanda avtomatik seçilir)
   music?: string;
   musicTitle?: string;

@@ -50,6 +50,11 @@ export const CustomTemplateCodeEditorModal: React.FC<CustomTemplateCodeEditorMod
       'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80'
   );
   const [active, setActive] = useState(template.active ?? true);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d6f4fdc (Initial commit)
   const [price, setPrice] = useState<string>(
     template.price !== undefined && template.price !== null ? String(template.price) : ''
   );
@@ -57,6 +62,10 @@ export const CustomTemplateCodeEditorModal: React.FC<CustomTemplateCodeEditorMod
     template.oldPrice !== undefined && template.oldPrice !== null ? String(template.oldPrice) : ''
   );
   const [currency, setCurrency] = useState(template.currency || 'AZN');
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
 
   // Media State — order matters: 1) bağlı dəvətnamə şəkli, 2) açılış videosu, 3) arxa fon
   const [closedEnvelopeImage, setClosedEnvelopeImage] = useState(template.closedEnvelopeImage || '');
@@ -230,9 +239,18 @@ export const CustomTemplateCodeEditorModal: React.FC<CustomTemplateCodeEditorMod
           border: colorBorder,
           muted: colorMuted,
         },
+<<<<<<< HEAD
         price: price.trim() === '' ? undefined : Number(price),
         oldPrice: oldPrice.trim() === '' ? undefined : Number(oldPrice),
         currency: currency.trim() || 'AZN',
+=======
+<<<<<<< HEAD
+=======
+        price: price.trim() === '' ? undefined : Number(price),
+        oldPrice: oldPrice.trim() === '' ? undefined : Number(oldPrice),
+        currency: currency.trim() || 'AZN',
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
         templatePath: 'templates/custom-code',
         updatedAt: new Date().toISOString(),
       };
@@ -641,6 +659,11 @@ export const CustomTemplateCodeEditorModal: React.FC<CustomTemplateCodeEditorMod
                   />
                 </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d6f4fdc (Initial commit)
                 <div className="grid grid-cols-3 gap-3">
                   <div>
                     <label className="block text-xs font-semibold text-stone-300 mb-1.5">Qiymət</label>
@@ -683,6 +706,10 @@ export const CustomTemplateCodeEditorModal: React.FC<CustomTemplateCodeEditorMod
                   Qiyməti boş buraxsanız, kataloqda "Qiymət sorğu ilə" göstəriləcək.
                 </p>
 
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
                 <div className="p-4 rounded-2xl bg-stone-900 border border-stone-800 flex items-center justify-between">
                   <div>
                     <h4 className="text-xs font-bold text-stone-200">Şablonun Statusu</h4>

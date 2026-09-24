@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import { Template, Invitation } from '../../types';
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+import { Plus, Trash2, Eye, Sliders, Code2, Copy } from 'lucide-react';
+=======
+>>>>>>> d6f4fdc (Initial commit)
 import { Plus, Trash2, Eye, Sliders, Code2, Copy, Tag } from 'lucide-react';
 
 const formatPrice = (tpl: Template) => {
@@ -8,6 +14,10 @@ const formatPrice = (tpl: Template) => {
   const symbol = currency === 'AZN' ? '₼' : currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency;
   return `${tpl.price} ${symbol}`;
 };
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
 import { TemplateCustomizerModal } from '../../templates/TemplateCustomizerModal';
 import { CustomTemplateCodeEditorModal } from '../../templates/CustomTemplateCodeEditorModal';
 import { CUSTOM_TEMPLATE_STARTERS } from '../../data/customTemplateStarters';
@@ -183,6 +193,11 @@ export const TemplatesManager: React.FC<TemplatesManagerProps> = ({
                   )}
                 </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d6f4fdc (Initial commit)
                 {/* Price Badge */}
                 <div className="absolute top-3 right-3">
                   <span
@@ -197,6 +212,10 @@ export const TemplatesManager: React.FC<TemplatesManagerProps> = ({
                   </span>
                 </div>
 
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
                 <div className="absolute bottom-3 left-3 right-3 text-stone-100">
                   <h3 className="text-base font-bold truncate">{tpl.name}</h3>
                   <span className="text-[10px] font-mono text-amber-300 capitalize">
@@ -207,6 +226,14 @@ export const TemplatesManager: React.FC<TemplatesManagerProps> = ({
 
               {/* Description & Attributes */}
               <div className="p-4 flex-1 space-y-3 text-xs">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                <p className="text-stone-400 text-[11px] line-clamp-2 leading-relaxed">
+                  {tpl.description}
+                </p>
+=======
+>>>>>>> d6f4fdc (Initial commit)
                 <div className="flex items-center justify-between">
                   <p className="text-stone-400 text-[11px] line-clamp-2 leading-relaxed flex-1">
                     {tpl.description}
@@ -220,6 +247,10 @@ export const TemplatesManager: React.FC<TemplatesManagerProps> = ({
                     <span className="text-amber-300 font-bold">{formatPrice(tpl)}</span>
                   </div>
                 ) : null}
+<<<<<<< HEAD
+=======
+>>>>>>> b07646a (Initial commit)
+>>>>>>> d6f4fdc (Initial commit)
 
                 {/* Features & Tags */}
                 <div className="flex flex-wrap items-center gap-2 pt-1">

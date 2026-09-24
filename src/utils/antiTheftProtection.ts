@@ -113,7 +113,6 @@ export function getAntiTheftIframeScript(): string {
 
   // 2. Block Inspect & DevTools Shortcuts
   document.addEventListener('keydown', function(e) {
-    // F12
     if (e.key === 'F12' || e.keyCode === 123) {
       e.preventDefault();
       e.stopPropagation();
@@ -124,7 +123,6 @@ export function getAntiTheftIframeScript(): string {
     var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     var cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
 
-    // Ctrl+Shift+I / J / C (DevTools & Inspect)
     if (cmdOrCtrl && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
       e.preventDefault();
       e.stopPropagation();
@@ -132,7 +130,6 @@ export function getAntiTheftIframeScript(): string {
       return false;
     }
 
-    // Mac Cmd+Option+I / J / C / U
     if (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c' || e.key === 'U' || e.key === 'u')) {
       e.preventDefault();
       e.stopPropagation();
@@ -140,7 +137,6 @@ export function getAntiTheftIframeScript(): string {
       return false;
     }
 
-    // Ctrl+U (View Source)
     if (cmdOrCtrl && (e.key === 'U' || e.key === 'u')) {
       e.preventDefault();
       e.stopPropagation();
@@ -148,7 +144,6 @@ export function getAntiTheftIframeScript(): string {
       return false;
     }
 
-    // Ctrl+S (Save Page)
     if (cmdOrCtrl && (e.key === 'S' || e.key === 's')) {
       e.preventDefault();
       e.stopPropagation();
@@ -156,7 +151,6 @@ export function getAntiTheftIframeScript(): string {
       return false;
     }
 
-    // Ctrl+A (Select All - allow only in input/textarea)
     if (cmdOrCtrl && (e.key === 'A' || e.key === 'a')) {
       var tag = document.activeElement ? document.activeElement.tagName : '';
       if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
@@ -183,9 +177,11 @@ export function getAntiTheftIframeScript(): string {
     console.log('%cMənbə kodunun hər hansı formada kopyalanması, təkrar istifadəsi və ya kommersiya məqsədilə yayılması QƏTİ QADAĞANDIR! © 2026 Bütün Hüquqlar Qorunur.', bannerDesc);
   } catch(e) {}
 
-  // 5. Detect DevTools Open (size gap + debugger timing trick) & block content
+  // 5. Detect DevTools Open (Only on Desktop)
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   var checkCount = 0;
   var consecutiveHits = 0;
+
   function showDevtoolsBlock() {
     var el = document.getElementById('__devtools_block__');
     if (el) el.classList.add('show');
@@ -194,64 +190,53 @@ export function getAntiTheftIframeScript(): string {
     var el = document.getElementById('__devtools_block__');
     if (el) el.classList.remove('show');
   }
-  setInterval(function() {
-    var widthDiff = window.outerWidth - window.innerWidth;
-    var heightDiff = window.outerHeight - window.innerHeight;
-    var sizeSuspicious = widthDiff > 160 || heightDiff > 160;
 
-    var timingSuspicious = false;
-    var t0 = performance.now();
-    debugger;
-    var t1 = performance.now();
-    if (t1 - t0 > 150) timingSuspicious = true;
+  if (!isMobile) {
+    setInterval(function() {
+      var widthDiff = window.outerWidth - window.innerWidth;
+      var heightDiff = window.outerHeight - window.innerHeight;
+      var sizeSuspicious = widthDiff > 160 || heightDiff > 160;
 
-    if (sizeSuspicious || timingSuspicious) {
-      consecutiveHits++;
-      // Require 2 consecutive positive checks so a single slow frame on an
-      // older phone doesn't wrongly hide the invitation for a real guest.
-      if (consecutiveHits >= 2) {
-        showDevtoolsBlock();
-        if (checkCount++ % 5 === 0) {
-          try {
-            console.clear();
-            console.log('%c[TƏHLÜKƏSİZLİK]: Mənbə kodlarının mühafizəsi aktivdir.', 'color:#ef4444;font-weight:bold;font-size:14px;');
-          } catch(err) {}
+      var timingSuspicious = false;
+      var t0 = performance.now();
+      debugger;
+      var t1 = performance.now();
+      if (t1 - t0 > 150) timingSuspicious = true;
+
+      if (sizeSuspicious || timingSuspicious) {
+        consecutiveHits++;
+        if (consecutiveHits >= 2) {
+          showDevtoolsBlock();
+          if (checkCount++ % 5 === 0) {
+            try {
+              console.clear();
+              console.log('%c[TƏHLÜKƏSİZLİK]: Mənbə kodlarının mühafizəsi aktivdir.', 'color:#ef4444;font-weight:bold;font-size:14px;');
+            } catch(err) {}
+          }
         }
+      } else {
+        consecutiveHits = 0;
+        hideDevtoolsBlock();
       }
-    } else {
-      consecutiveHits = 0;
-      hideDevtoolsBlock();
-    }
-  }, 900);
+    }, 900);
+  }
 })();
 </script>`;
 }
 
-/**
- * Minifies and scrambles comments out of custom HTML/CSS/JS so readable developer source is not exposed
- */
 export function minifyAndProtectHtml(html: string): string {
   if (!html) return '';
 
   return html
-    // Strip HTML comments (except conditional IE comments if any)
     .replace(/<!--(?!\[if)[\s\S]*?-->/g, '')
-    // Strip multi-line CSS/JS comments
     .replace(/\/\*[\s\S]*?\*\//g, '')
-    // Strip single line JS comments that are on their own lines
     .replace(/^\s*\/\/.*$/gm, '')
-    // Condense redundant whitespace between tags
     .replace(/>\s{2,}</g, '><');
 }
 
-/**
- * React hook or initializer to attach window-level anti-theft guards
- */
 export function attachWindowAntiTheftGuards(): () => void {
   if (typeof window === 'undefined') return () => {};
 
-  // --- Toast (small warning bubble), built with plain DOM so it never
-  // interferes with React's own tree ---
   let toastEl: HTMLDivElement | null = null;
   let toastTimer: ReturnType<typeof setTimeout> | null = null;
   const showToast = (msg: string) => {
@@ -291,7 +276,6 @@ export function attachWindowAntiTheftGuards(): () => void {
     }, 2200);
   };
 
-  // --- CSS: block text selection + image/video dragging & long-press save ---
   const styleEl = document.createElement('style');
   styleEl.setAttribute('id', '__app_anti_theft_styles__');
   styleEl.textContent = `
@@ -316,7 +300,6 @@ export function attachWindowAntiTheftGuards(): () => void {
   document.body.classList.add('__anti-theft-active');
 
   const handleContextMenu = (e: MouseEvent) => {
-    // If user right-clicked inside an input/textarea in the app, allow it (copy/paste UX)
     const target = e.target as HTMLElement | null;
     if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
       return;
@@ -336,35 +319,30 @@ export function attachWindowAntiTheftGuards(): () => void {
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
 
-    // F12
     if (e.key === 'F12' || e.keyCode === 123) {
       e.preventDefault();
       showToast('🔒 Tərtibatçı menyusu bağlıdır');
       return;
     }
 
-    // Ctrl+Shift+I / J / C (Inspect)
     if (cmdOrCtrl && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) {
       e.preventDefault();
       showToast('🔒 Kodlara baxmaq qadağandır');
       return;
     }
 
-    // Mac Cmd+Opt+I / J / C
     if (e.metaKey && e.altKey && ['I', 'i', 'J', 'j', 'C', 'c', 'U', 'u'].includes(e.key)) {
       e.preventDefault();
       showToast('🔒 Kodlara baxmaq qadağandır');
       return;
     }
 
-    // Ctrl+U (View Source)
     if (cmdOrCtrl && (e.key === 'U' || e.key === 'u')) {
       e.preventDefault();
       showToast('🔒 Mənbə kodu bağlıdır');
       return;
     }
 
-    // Ctrl+S (Save Page)
     if (cmdOrCtrl && (e.key === 'S' || e.key === 's')) {
       e.preventDefault();
       showToast('🔒 Səhifəni yadda saxlamaq qadağandır');
@@ -376,7 +354,6 @@ export function attachWindowAntiTheftGuards(): () => void {
   window.addEventListener('keydown', handleKeyDown, true);
   window.addEventListener('dragstart', handleDragStart, true);
 
-  // Console warning banner (shown once)
   try {
     console.log('%cDAYANIN!', 'color:#dc2626;font-size:26px;font-weight:900;');
     console.log(
@@ -387,7 +364,6 @@ export function attachWindowAntiTheftGuards(): () => void {
     /* no-op */
   }
 
-  // --- Full-screen blocking overlay shown for as long as DevTools looks open ---
   let blockOverlay: HTMLDivElement | null = null;
   const showBlockOverlay = () => {
     if (blockOverlay) return;
@@ -420,55 +396,52 @@ export function attachWindowAntiTheftGuards(): () => void {
     }
   };
 
-  // Best-effort DevTools-open detection. Two independent heuristics are
-  // combined so it also catches an UNDOCKED devtools window (which the
-  // simple outerWidth/innerWidth gap check misses because the browser
-  // window itself isn't resized in that case):
-  //  1. window size gap (docked devtools)
-  //  2. a debugger-statement timing trick (works even when undocked, since
-  //     `debugger` pauses execution only while devtools is actually open)
-  // Neither is bulletproof — this is a deterrent layer, not real DRM.
+  // Check if device is mobile
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
   let checkCount = 0;
   let consecutiveHits = 0;
-  const devtoolsInterval = setInterval(() => {
-    const widthDiff = window.outerWidth - window.innerWidth;
-    const heightDiff = window.outerHeight - window.innerHeight;
-    const sizeSuspicious = widthDiff > 160 || heightDiff > 160;
+  let devtoolsInterval: ReturnType<typeof setInterval> | null = null;
 
-    let timingSuspicious = false;
-    const t0 = performance.now();
-    // eslint-disable-next-line no-debugger
-    debugger;
-    const t1 = performance.now();
-    if (t1 - t0 > 150) timingSuspicious = true;
+  // Run DevTools detection ONLY on Desktop devices
+  if (!isMobile) {
+    devtoolsInterval = setInterval(() => {
+      const widthDiff = window.outerWidth - window.innerWidth;
+      const heightDiff = window.outerHeight - window.innerHeight;
+      const sizeSuspicious = widthDiff > 160 || heightDiff > 160;
 
-    if (sizeSuspicious || timingSuspicious) {
-      consecutiveHits++;
-      // Require 2 consecutive positive checks before blocking, so a single
-      // slow frame / GC pause on an older phone doesn't wrongly hide the
-      // invitation for a real guest.
-      if (consecutiveHits >= 2) {
-        showBlockOverlay();
-        if (checkCount++ % 5 === 0) {
-          try {
-            console.clear();
-            console.log('%c[TƏHLÜKƏSİZLİK]: Kodların mühafizəsi aktivdir.', 'color:#ef4444;font-weight:bold;font-size:14px;');
-          } catch {
-            /* no-op */
+      let timingSuspicious = false;
+      const t0 = performance.now();
+      // eslint-disable-next-line no-debugger
+      debugger;
+      const t1 = performance.now();
+      if (t1 - t0 > 150) timingSuspicious = true;
+
+      if (sizeSuspicious || timingSuspicious) {
+        consecutiveHits++;
+        if (consecutiveHits >= 2) {
+          showBlockOverlay();
+          if (checkCount++ % 5 === 0) {
+            try {
+              console.clear();
+              console.log('%c[TƏHLÜKƏSİZLİK]: Kodların mühafizəsi aktivdir.', 'color:#ef4444;font-weight:bold;font-size:14px;');
+            } catch {
+              /* no-op */
+            }
           }
         }
+      } else {
+        consecutiveHits = 0;
+        hideBlockOverlay();
       }
-    } else {
-      consecutiveHits = 0;
-      hideBlockOverlay();
-    }
-  }, 900);
+    }, 900);
+  }
 
   return () => {
     window.removeEventListener('contextmenu', handleContextMenu, true);
     window.removeEventListener('keydown', handleKeyDown, true);
     window.removeEventListener('dragstart', handleDragStart, true);
-    clearInterval(devtoolsInterval);
+    if (devtoolsInterval) clearInterval(devtoolsInterval);
     document.body.classList.remove('__anti-theft-active');
     styleEl.remove();
     if (toastEl) toastEl.remove();
