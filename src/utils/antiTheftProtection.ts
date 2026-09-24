@@ -177,12 +177,14 @@ export function getAntiTheftIframeScript(): string {
     console.log('%cMənbə kodunun hər hansı formada kopyalanması, təkrar istifadəsi və ya kommersiya məqsədilə yayılması QƏTİ QADAĞANDIR! © 2026 Bütün Hüquqlar Qorunur.', bannerDesc);
   } catch(e) {}
 
-  // 5. Detect DevTools Open (Only on Desktop)
-  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || ('ontouchend' in window || navigator.maxTouchPoints > 0);
+  // Mobil və ya toxunma ekranlı cihazları (iOS Safari, Chrome Mobile v.s.) dərhal aşkarlayırıq
+ // 5. Detect DevTools Open (Only on Desktop)
+  var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || ('ontouchend' in window || navigator.maxTouchPoints > 0);
   var checkCount = 0;
   var consecutiveHits = 0;
 
   function showDevtoolsBlock() {
+    if (isMobileDevice) return; // Mobildə bloklama pəncərəsini göstərmə
     var el = document.getElementById('__devtools_block__');
     if (el) el.classList.add('show');
   }
@@ -191,7 +193,7 @@ export function getAntiTheftIframeScript(): string {
     if (el) el.classList.remove('show');
   }
 
-  if (!isMobile) {
+  if (!isMobileDevice) {
     setInterval(function() {
       var widthDiff = window.outerWidth - window.innerWidth;
       var heightDiff = window.outerHeight - window.innerHeight;
@@ -207,12 +209,6 @@ export function getAntiTheftIframeScript(): string {
         consecutiveHits++;
         if (consecutiveHits >= 2) {
           showDevtoolsBlock();
-          if (checkCount++ % 5 === 0) {
-            try {
-              console.clear();
-              console.log('%c[TƏHLÜKƏSİZLİK]: Mənbə kodlarının mühafizəsi aktivdir.', 'color:#ef4444;font-weight:bold;font-size:14px;');
-            } catch(err) {}
-          }
         }
       } else {
         consecutiveHits = 0;
@@ -220,7 +216,6 @@ export function getAntiTheftIframeScript(): string {
       }
     }, 900);
   }
-})();
 </script>`;
 }
 
