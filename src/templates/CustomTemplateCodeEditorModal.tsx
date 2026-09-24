@@ -232,18 +232,12 @@ export const CustomTemplateCodeEditorModal: React.FC<CustomTemplateCodeEditorMod
           border: colorBorder,
           muted: colorMuted,
         },
-<<<<<<< HEAD
         price: price.trim() === '' ? undefined : Number(price),
         oldPrice: oldPrice.trim() === '' ? undefined : Number(oldPrice),
         currency: currency.trim() || 'AZN',
-=======
-<<<<<<< HEAD
-=======
         price: price.trim() === '' ? undefined : Number(price),
         oldPrice: oldPrice.trim() === '' ? undefined : Number(oldPrice),
         currency: currency.trim() || 'AZN',
->>>>>>> b07646a (Initial commit)
->>>>>>> d6f4fdc (Initial commit)
         templatePath: 'templates/custom-code',
         updatedAt: new Date().toISOString(),
       };
